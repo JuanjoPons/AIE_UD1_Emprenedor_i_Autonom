@@ -1,0 +1,1082 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UD1 · Emprendimiento, formas jurídicas y normativa · IB2301</title>
+<meta name="description" content="Material interactivo de la UD1 del módulo IB2301 Autoocupació i emprenedoria: sesiones, actividades autocorregibles, enlaces y vídeos.">
+<!--
+ ============ INSTRUCCIONES RÁPIDAS (profesor) ============
+ 1) Sube este archivo a un repositorio de GitHub como index.html y activa GitHub Pages (Settings > Pages).
+ 2) Para recibir un correo cuando el alumnado envíe una sesión, crea un flujo de Power Automate:
+    - Desencadenador: "Cuando se recibe una solicitud HTTP".
+    - Acción: "Analizar JSON" sobre el cuerpo (Body). Esquema: usa "Generar a partir de un ejemplo" con un envío de prueba.
+    - Acción: "Enviar un correo electrónico (V2)" a jpons@centredelamar.com con Asunto = asunto y Cuerpo = resumen.
+    - (Opcional) "Agregar una fila a una tabla" de Excel en SharePoint con alumno, grupo, sesion, nota y fecha.
+    - Copia la URL HTTP POST del desencadenador y pégala en CONFIG.WEBHOOK_URL (más abajo).
+ 3) Mientras WEBHOOK_URL esté vacía, la web ofrece al alumno enviar el resultado con su programa de correo.
+ Aviso: las respuestas correctas viajan dentro de la página; es material formativo, no una prueba evaluable.
+-->
+<style>
+:root{
+  --bg:#f4f7fa; --surface:#ffffff; --surface-2:#eef3f8; --ink:#14233a; --ink-2:#4a5b73; --line:#d9e2ec;
+  --brand:#0b5c8a; --brand-2:#0e7c86; --brand-ink:#ffffff; --accent:#e9a23b;
+  --ok:#17803d; --ok-bg:#e4f6ea; --bad:#b42318; --bad-bg:#fdecea; --warn-bg:#fff6e0; --warn:#8a5a00;
+  --shadow:0 1px 2px rgba(20,35,58,.06),0 6px 20px rgba(20,35,58,.07);
+  --radius:16px; --font:"Inter","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0c1624; --surface:#122035; --surface-2:#172a44; --ink:#e8eef6; --ink-2:#a9b8cc; --line:#25395a;
+    --brand:#4db3e6; --brand-2:#4fd1c5; --brand-ink:#06223a; --accent:#f2b95a;
+    --ok:#5bd68a; --ok-bg:#12331f; --bad:#ff8a80; --bad-bg:#3a1713; --warn-bg:#34290d; --warn:#f2c76b;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em}
+h2{font-size:1.45rem} h3{font-size:1.15rem} h4{font-size:1rem}
+p{margin:0 0 .9em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+/* header */
+.hero{background:linear-gradient(135deg,#0a3d62 0%,#0b5c8a 55%,#0e7c86 100%);color:#fff;padding:28px 0 22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero .tag{display:inline-block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.16);padding:4px 10px;border-radius:999px;margin-bottom:10px}
+.hero h1{font-size:clamp(1.5rem,4vw,2.3rem);margin:0 0 6px}
+.hero p{margin:0;opacity:.92;max-width:62ch}
+.who{position:absolute;right:16px;top:16px;z-index:2}
+.chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:999px;font:inherit;font-size:.85rem;cursor:pointer}
+.chip:hover{background:rgba(255,255,255,.26)}
+/* tabs */
+.tabs-bar{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:12px;font:inherit;font-size:.92rem;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;min-width:96px;transition:.15s}
+.tab small{color:var(--ink-2);font-size:.72rem}
+.tab:hover{border-color:var(--brand)}
+.tab[aria-selected="true"]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.tab[aria-selected="true"] small{color:inherit;opacity:.85}
+.tab .done{color:var(--ok);font-weight:700}
+.tab[aria-selected="true"] .done{color:#c9ffd9}
+main{padding:22px 0 60px}
+.panel[hidden]{display:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:18px}
+.card h3{margin-top:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.pill{font-size:.78rem;background:var(--surface-2);border:1px solid var(--line);padding:3px 10px;border-radius:999px;color:var(--ink-2)}
+.pill.brand{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+ul.goals{padding-left:1.1em;margin:.3em 0}
+ul.goals li{margin:.2em 0}
+.callout{border-left:4px solid var(--accent);background:var(--warn-bg);color:var(--ink);padding:12px 14px;border-radius:0 12px 12px 0;margin:14px 0}
+.callout.info{border-color:var(--brand);background:var(--surface-2)}
+.callout b.t{display:block;margin-bottom:2px}
+.table-wrap{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--surface-2)}
+.sect-title{display:flex;align-items:center;gap:10px;margin:26px 0 12px;font-size:1.2rem}
+.sect-title::after{content:"";flex:1;height:1px;background:var(--line)}
+/* theory accordions */
+details.acc{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:10px 0;overflow:hidden}
+details.acc>summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary::after{content:"+";font-weight:700;color:var(--brand)}
+details.acc[open]>summary::after{content:"–"}
+details.acc>.body{padding:0 16px 14px}
+/* activities */
+.act{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin:16px 0;box-shadow:var(--shadow);overflow:hidden}
+.act-head{display:flex;gap:12px;align-items:center;padding:14px 18px;background:var(--surface-2);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.act-code{background:var(--brand);color:var(--brand-ink);font-weight:700;border-radius:10px;padding:4px 10px;font-size:.9rem}
+.act-head h4{margin:0;flex:1;min-width:200px}
+.badge{font-size:.74rem;padding:3px 10px;border-radius:999px;font-weight:600}
+.badge.auto{background:var(--ok-bg);color:var(--ok)}
+.badge.cls{background:var(--warn-bg);color:var(--warn)}
+.act-body{padding:16px 18px}
+.q{padding:12px 0;border-bottom:1px dashed var(--line)}
+.q:last-child{border-bottom:0}
+.q .qt{font-weight:600;margin-bottom:8px}
+.q .qn{color:var(--brand);margin-right:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:10px;margin:6px 0;cursor:pointer;background:var(--bg)}
+.opt:hover{border-color:var(--brand)}
+.opt input{margin-top:.28em;accent-color:var(--brand)}
+select.sel{font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);max-width:100%;width:100%}
+.q.ok .opt.chosen,.cell.ok select{border-color:var(--ok);background:var(--ok-bg)}
+.q.bad .opt.chosen,.cell.bad select{border-color:var(--bad);background:var(--bad-bg)}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.fb{margin-top:8px;font-size:.92rem;padding:8px 12px;border-radius:10px}
+.fb.ok{background:var(--ok-bg);color:var(--ok)} .fb.bad{background:var(--bad-bg);color:var(--bad)}
+.fb b{display:block}
+.fb span{color:var(--ink)}
+fieldset{border:0;padding:0;margin:0}
+.gridtab td.cell select{min-width:150px}
+.cell.ok{outline:2px solid var(--ok);outline-offset:-2px}.cell.bad{outline:2px solid var(--bad);outline-offset:-2px}
+.cell .why{display:block;font-size:.8rem;margin-top:4px;color:var(--ink-2)}
+.submit-bar{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;box-shadow:var(--shadow)}
+.btn{font:inherit;font-weight:600;border:0;border-radius:12px;padding:11px 18px;cursor:pointer;background:var(--brand);color:var(--brand-ink);transition:.15s}
+.btn:hover{filter:brightness(1.08)} .btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.sec{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--brand)}
+.progress{flex:1;min-width:160px;font-size:.88rem;color:var(--ink-2)}
+.bar{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden;margin-top:4px}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-2));width:0;transition:.3s}
+.result{border-radius:var(--radius);padding:18px;margin-top:14px;background:var(--surface);border:2px solid var(--brand)}
+.result .big{font-size:2.2rem;font-weight:800;color:var(--brand);line-height:1}
+.result .big small{font-size:1rem;color:var(--ink-2);font-weight:600}
+.result ul{margin:.6em 0;padding-left:1.1em}
+.status{font-size:.9rem;margin:8px 0 0;padding:8px 12px;border-radius:10px}
+.status.ok{background:var(--ok-bg);color:var(--ok)}
+.status.warn{background:var(--warn-bg);color:var(--warn)}
+.status.bad{background:var(--bad-bg);color:var(--bad)}
+.cls-box{display:flex;gap:14px;align-items:flex-start}
+.cls-box .ico{font-size:1.6rem}
+/* resources */
+.links{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.links a.lk{display:block;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);text-decoration:none;color:var(--ink);height:100%;transition:.15s}
+.links a.lk:hover{border-color:var(--brand);transform:translateY(-2px)}
+.links .lt{font-weight:700;color:var(--brand);display:block}
+.links .ld{font-size:.88rem;color:var(--ink-2)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.vcard{border:1px solid var(--line);background:var(--surface);border-radius:14px;overflow:hidden}
+.vcard .thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#0a3d62,#0e7c86);display:grid;place-items:center;color:#fff;font-size:2.2rem}
+.vcard iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+.vcard .vb{padding:12px 14px}
+.vcard .vb b{display:block;margin-bottom:4px}
+.vcard .vb small{color:var(--ink-2)}
+.vcard .vb a{display:inline-block;margin-top:8px;font-weight:600}
+/* dialog */
+dialog{border:0;border-radius:18px;padding:0;max-width:min(460px,92vw);width:100%;background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+dialog::backdrop{background:rgba(8,18,32,.6);backdrop-filter:blur(3px)}
+dialog form{padding:22px}
+label.f{display:block;font-weight:600;margin:12px 0 4px}
+input.t{width:100%;font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input.t:focus,select.sel:focus,.btn:focus-visible,.tab:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 55%,transparent);outline-offset:2px}
+.err{color:var(--bad);font-size:.85rem;min-height:1.2em;margin-top:6px}
+.dlg-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--ink-2);font-size:.85rem}
+.hint{color:var(--ink-2);font-size:.88rem}
+@media(max-width:620px){.who{position:static;display:block;margin:0 0 12px;text-align:left}.hero{padding-top:16px}}
+@media print{.tabs-bar,.submit-bar,.who{display:none}.panel[hidden]{display:block}}
+
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <button class="chip who" id="who" type="button" aria-label="Cambiar alumno o grupo">👤 Identifícate</button>
+    <span class="tag">IB2301 · Autoocupació i emprenedoria</span>
+    <h1>UD1 · Emprendimiento, formas jurídicas y normativa</h1>
+    <p>Seis sesiones con ejemplos del sector náutico de Menorca, actividades que se corrigen solas y recursos para ir más lejos.</p>
+  </div>
+</header>
+<div class="tabs-bar"><div class="wrap"><div class="tabs" id="tabs" role="tablist" aria-label="Sesiones de la unidad"></div></div></div>
+<main class="wrap" id="app"></main>
+<footer><div class="wrap">Material formativo del módulo IB2301. Las cifras, plazos y convocatorias son de octubre de 2026: antes de usarlas en una solicitud real, compruébalas en la fuente oficial.</div></footer>
+
+<dialog id="idDlg" aria-labelledby="idTitle">
+  <form id="idForm" method="dialog" novalidate>
+    <h3 id="idTitle">Antes de empezar</h3>
+    <p class="hint">Tu profesor recibirá el resultado de cada sesión con estos datos.</p>
+    <label class="f" for="idName">Nombre y apellidos</label>
+    <input class="t" id="idName" autocomplete="name" maxlength="80" required>
+    <label class="f" for="idGroup">Código del grupo</label>
+    <input class="t" id="idGroup" maxlength="20" autocomplete="off" required>
+    <div class="err" id="idErr" role="alert"></div>
+    <div class="dlg-actions"><button type="button" class="btn sec" id="idCancel">Ahora no</button><button class="btn" type="submit">Guardar y continuar</button></div>
+  </form>
+</dialog>
+<dialog id="cfDlg" aria-labelledby="cfTitle">
+  <form method="dialog" onsubmit="return false">
+    <h3 id="cfTitle"></h3><p id="cfText"></p>
+    <div class="dlg-actions"><button type="button" class="btn sec" id="cfNo">Cancelar</button><button type="button" class="btn" id="cfOk">Continuar</button></div>
+  </form>
+</dialog>
+<script>
+/* ===== CONTENIDO · UD1 · IB2301 Autoocupació i emprenedoria ===== */
+const SESSIONS = [
+/* ---------------------------------------------------------- SESIÓN 1 */
+{
+ id:'s1', n:1, block:'B01', title:'El emprendedor y el empresario', ce:'1a',
+ goals:[
+  'Diferenciar emprendedor, empresario e intraemprendedor.',
+  'Identificar los cuatro perfiles de emprendedor: tradicional, tecnológico, social e intraorganizacional.',
+  'Explicar por qué fracasan algunos negocios y qué se puede hacer para evitarlo.'],
+ theory:`
+ <details class="acc" open><summary>Emprendedor, empresario e intraemprendedor</summary><div class="body">
+  <div class="table-wrap"><table>
+   <tr><th>Concepto</th><th>Qué significa</th></tr>
+   <tr><td><b>Persona emprendedora</b></td><td>Identifica una oportunidad de mercado y crea un producto o servicio que cubre una necesidad. Asume el riesgo de las primeras etapas.</td></tr>
+   <tr><td><b>Persona empresaria</b></td><td>Gestiona un negocio ya en marcha: lo mantiene, lo hace crecer y cuida los recursos.</td></tr>
+   <tr><td><b>Intraemprendedor</b></td><td>Trabajador por cuenta ajena que propone ideas o mejoras dentro de su empresa, sin asumir el riesgo económico.</td></tr>
+  </table></div>
+  <p>Una misma persona puede ser las dos cosas en momentos distintos. Lo importante es saber en qué fase está, porque las decisiones que le tocan son diferentes.</p>
+  <div class="callout info"><b class="t">Analogía náutica</b>El emprendedor diseña el barco y lo bota por primera vez, sin saber si flotará bien con carga. El empresario es el patrón que lo lleva cada día a puerto, vigila el combustible y ajusta la ruta. El intraemprendedor es el marinero que propone una mejora del aparejo a su patrón.</div>
+ </div></details>
+ <details class="acc"><summary>Los cuatro perfiles de emprendedor</summary><div class="body">
+  <div class="table-wrap"><table>
+   <tr><th>Perfil</th><th>Rasgos</th><th>Ejemplo náutico</th></tr>
+   <tr><td><b>Tradicional</b></td><td>Negocio convencional en un mercado conocido, demanda estable y riesgo bajo.</td><td>Taller de reparación de motores fueraborda en un puerto deportivo.</td></tr>
+   <tr><td><b>Tecnológico</b></td><td>Producto o servicio innovador, riesgo alto, rentabilidad potencial alta y posibilidad de crecer rápido.</td><td>Aplicación para planificar y registrar el mantenimiento de una flota de alquiler.</td></tr>
+   <tr><td><b>Social</b></td><td>Resuelve un problema social o ambiental y genera ingresos propios sin depender de subvenciones.</td><td>Servicio de recogida y reciclaje de residuos de varadero.</td></tr>
+   <tr><td><b>Intraorganizacional</b></td><td>Trabajador que propone mejoras dentro de la empresa donde trabaja.</td><td>Mecánico que diseña un nuevo protocolo de invernaje y lo propone a su jefe.</td></tr>
+  </table></div>
+  <p class="hint">Dato curioso: empresas como 3M (el Post-it) o Google (Google News) han creado productos a partir de ideas de sus propios empleados.</p>
+ </div></details>
+ <details class="acc"><summary>Por qué fracasan los negocios</summary><div class="body">
+  <ul class="goals">
+   <li>Subestimar los costes iniciales o sobreestimar los ingresos.</li>
+   <li>Ignorar a una competencia fuerte.</li>
+   <li>No adaptarse a cambios del mercado o de la tecnología (Kodak ante la fotografía digital, Blockbuster ante el streaming).</li>
+   <li>Crecer más rápido de lo que se puede atender. El Fyre Festival vendió mucho más de lo que su logística podía sostener.</li>
+   <li>Dar mal servicio al cliente.</li>
+  </ul>
+  <p>Todas estas causas se pueden detectar antes de arrancar con un plan de empresa y un estudio de viabilidad, que se trabajan en la UD4.</p>
+ </div></details>
+ <details class="acc"><summary>Ejemplo: Marta y el servicio móvil de mantenimiento (caso ficticio)</summary><div class="body">
+  <p>Marta es técnica en mantenimiento de embarcaciones y lleva seis años como empleada en un varadero de Maó. Conoce bien los problemas de invernaje de las embarcaciones de recreo y decide montar un servicio móvil de mantenimiento a domicilio para armadores particulares.</p>
+  <ul class="goals">
+   <li>Al detectar la necesidad y arriesgar sus ahorros, actúa como <b>emprendedora</b>, con perfil tradicional.</li>
+   <li>Dos años después contrata a 4 personas y factura 600.000 €: ahora gestiona un negocio en marcha, es <b>empresaria</b>.</li>
+   <li>Un mecánico de su plantilla propone un servicio de revisión previa a la temporada: es un <b>intraemprendedor</b>.</li>
+  </ul>
+  <p><b>Para pensar:</b> ¿en qué momento deja Marta de ser sobre todo emprendedora y pasa a ser sobre todo empresaria?</p>
+ </div></details>`,
+ activities:[
+  { id:'s1a1', code:'A1', kind:'auto', title:'Clasifica seis casos náuticos', ui:'select',
+    intro:'Para cada caso, elige si se trata de un perfil de emprendedor o de una persona empresaria.',
+    opts:['Emprendedor tradicional','Emprendedor tecnológico','Emprendedor social','Intraemprendedor (intraorganizacional)','Empresario (gestiona un negocio ya en marcha)'],
+    items:[
+     {q:'Joan abre un taller de reparación de motores fueraborda en el puerto deportivo de Ciutadella. Conoce el mercado y la demanda es estable.',a:0,why:'Negocio convencional en un mercado conocido y con riesgo bajo: perfil tradicional.'},
+     {q:'Una técnica crea una aplicación para planificar y registrar el mantenimiento de flotas de embarcaciones de alquiler.',a:1,why:'Servicio innovador, riesgo alto y posibilidad de crecer rápido: perfil tecnológico.'},
+     {q:'Un grupo de jóvenes monta un servicio de recogida y reciclaje de residuos de varadero que se financia con sus propios ingresos.',a:2,why:'Resuelve un problema ambiental y genera ingresos propios sin depender de subvenciones: perfil social.'},
+     {q:'Un mecánico de plantilla diseña un nuevo protocolo de invernaje y se lo propone a su jefe.',a:3,why:'Propone una mejora dentro de la empresa donde trabaja, sin arriesgar su dinero: intraemprendedor.'},
+     {q:'Carmen lleva desde hace quince años el varadero familiar: controla los costes, organiza a doce trabajadores y mantiene la rentabilidad.',a:4,why:'Gestiona un negocio ya consolidado, no lo ha creado ni arriesga en una primera etapa: es empresaria.'},
+     {q:'Dos amigos montan una tienda de repuestos náuticos en Maó, en un mercado que ya conocen y con clientes habituales.',a:0,why:'Mercado conocido, demanda estable y riesgo bajo: perfil tradicional.'}
+    ]},
+  { id:'s1a2', code:'A2', kind:'aula', title:'Debate: ¿por qué muchos jóvenes prefieren un empleo seguro a emprender?',
+    desc:'Se hace en el aula, con toda la clase. Prepara dos argumentos sobre riesgo y autonomía. Se valora la participación y la calidad de los argumentos.'},
+  { id:'s1a3', code:'A3', kind:'classroom', title:'Entrevista a una persona autónoma o empresaria de la zona',
+    desc:'Tarea para casa. Entrevista a una persona autónoma o empresaria de tu entorno (puede ser del sector náutico) y entrega por Classroom un informe breve de una página.',
+    points:['Guion con al menos 8 preguntas: motivación, riesgo, tipo de autónomo y tamaño del negocio.','Clasifica a la persona entrevistada: ¿emprendedora o empresaria? ¿Es una PYME? Justifícalo con datos.','Indica qué tipo de autónomo es y por qué.','Entrega en plazo, con una presentación clara.']},
+  { id:'s1q', code:'Extra', kind:'auto', title:'Repaso rápido de la sesión', ui:'radio',
+    intro:'Cinco preguntas para comprobar lo que has aprendido hoy.',
+    items:[
+     {q:'Una técnica detecta que nadie ofrece servicio de invernaje de lanchas en su zona y lo monta con sus ahorros. Es…',opts:['Empresaria, porque gestiona un negocio','Emprendedora, porque detecta la oportunidad y asume el riesgo inicial','Intraemprendedora','Trabajadora por cuenta ajena'],a:1,why:'Quien detecta la necesidad y asume el riesgo de las primeras etapas es emprendedor.'},
+     {q:'Un mecánico propone a su jefe un nuevo protocolo de invernaje y el jefe lo aplica. ¿Qué asume el mecánico?',opts:['El riesgo económico completo','El riesgo económico a medias con su jefe','Ningún riesgo económico: es un intraemprendedor','Los costes de la competencia'],a:2,why:'El intraemprendedor no pone su dinero en juego.'},
+     {q:'¿Cuáles de estas son causas habituales de fracaso de un negocio?',ui:'multi',opts:['Subestimar los costes iniciales','Ignorar a una competencia fuerte','Hacer un plan de empresa y un estudio de viabilidad','Crecer más rápido de lo que se puede atender','Adaptarse a los cambios del mercado'],a:[0,1,3],why:'Hacer un plan de viabilidad y adaptarse al mercado ayudan a evitar el fracaso, no lo causan.'},
+     {q:'3M (Post-it) y Google (Google News) son ejemplos de…',opts:['Emprendimiento social','Intraemprendimiento','Falsos autónomos','Empresas familiares'],a:1,why:'Crearon productos a partir de ideas de sus propios empleados.'},
+     {q:'Kodak ante la fotografía digital es un ejemplo de fracaso por…',opts:['Subestimar los costes iniciales','Crecer demasiado rápido','No adaptarse a los cambios de la tecnología','Dar mal servicio al cliente'],a:2,why:'Kodak no supo adaptarse al cambio tecnológico.'}
+    ]}
+ ]
+},
+/* ---------------------------------------------------------- SESIÓN 2 */
+{
+ id:'s2', n:2, block:'B01', title:'El autónomo y la PYME', ce:'1a · 1b',
+ goals:[
+  'Definir al trabajador autónomo y sus características.',
+  'Clasificar los tipos de autónomo: empresario individual, TRADE, autónomo societario, ERL y familiar colaborador.',
+  'Distinguir al TRADE del falso autónomo.',
+  'Clasificar una empresa como micro, pequeña o mediana según plantilla, volumen de negocio y balance.'],
+ theory:`
+ <details class="acc" open><summary>¿Qué es un trabajador autónomo?</summary><div class="body">
+  <p>Es la persona física que realiza de forma <b>habitual, personal, directa y por cuenta propia</b> una actividad económica a título lucrativo, fuera del ámbito de dirección y organización de otra persona. Puede tener trabajadores a su cargo o no. Si los tiene, sigue siendo autónomo.</p>
+  <div class="callout"><b class="t">Dos confusiones habituales</b>«Empresario individual» es la forma jurídica; «autónomo» es el régimen de la Seguridad Social (RETA), donde también cotizan los socios de ciertas sociedades.</div>
+ </div></details>
+ <details class="acc"><summary>Tipos de autónomo</summary><div class="body">
+  <div class="table-wrap"><table>
+   <tr><th>Tipo</th><th>Cómo se reconoce</th></tr>
+   <tr><td><b>Empresario individual</b></td><td>Persona física que ejerce la actividad en nombre propio. Es la figura más habitual.</td></tr>
+   <tr><td><b>TRADE</b> (económicamente dependiente)</td><td>Trabaja sobre todo para un solo cliente, del que obtiene <b>al menos el 75 %</b> de sus ingresos. Necesita un contrato por escrito registrado en el SEPE.</td></tr>
+   <tr><td><b>Autónomo societario</b></td><td>Socio o administrador de una sociedad mercantil con el control efectivo de ella.</td></tr>
+   <tr><td><b>ERL</b> (Emprendedor de Responsabilidad Limitada)</td><td>Empresario individual que protege su vivienda habitual de las deudas del negocio mediante inscripción registral (se verá en el bloque B02).</td></tr>
+   <tr><td><b>Familiar colaborador</b></td><td>Familiar que trabaja de forma habitual en el negocio del autónomo.</td></tr>
+  </table></div>
+ </div></details>
+ <details class="acc"><summary>TRADE o falso autónomo</summary><div class="body">
+  <p>El <b>TRADE</b> tiene un contrato registrado, organiza su propio trabajo y usa sus propios medios.</p>
+  <p>El <b>falso autónomo</b> figura como autónomo, pero en realidad trabaja con horario fijo, recibe órdenes y no asume riesgo empresarial. Es una relación laboral encubierta y su sitio es el <b>Régimen General</b> de la Seguridad Social.</p>
+  <p class="hint">Norma: Ley 20/2007 del Estatuto del Trabajo Autónomo (LETA), art. 1 (define al autónomo) y art. 11 (define al TRADE y fija el 75 %).</p>
+ </div></details>
+ <details class="acc"><summary>La PYME: micro, pequeña o mediana</summary><div class="body">
+  <p>Una empresa se clasifica según tres datos: personas que emplea, volumen de negocio anual y balance general anual. Hay que cumplir el límite de plantilla y, además, <b>uno de los dos límites económicos</b>.</p>
+  <div class="table-wrap"><table>
+   <tr><th>Categoría</th><th>Personas</th><th>Volumen de negocio</th><th>Balance general</th></tr>
+   <tr><td>Microempresa</td><td>menos de 10</td><td>hasta 2 M€</td><td>hasta 2 M€</td></tr>
+   <tr><td>Pequeña empresa</td><td>menos de 50</td><td>hasta 10 M€</td><td>hasta 10 M€</td></tr>
+   <tr><td>Mediana empresa</td><td>menos de 250</td><td>hasta 50 M€</td><td>hasta 43 M€</td></tr>
+  </table></div>
+  <p>Un taller náutico con cuatro empleados y 600.000 € de facturación es una microempresa. Un astillero con 120 trabajadores y 30 millones de facturación es una mediana empresa.</p>
+  <p class="hint">Norma: Recomendación 2003/361/CE de la Comisión Europea. Atención: algunas webs divulgativas aún publican cifras antiguas (40 M€ y 27 M€ para la mediana).</p>
+ </div></details>`,
+ activities:[
+  { id:'s2a4', code:'A4', kind:'auto', title:'Falso autónomo, TRADE y otros tipos', ui:'select',
+    intro:'Clasifica cada situación según los datos que da el enunciado.',
+    opts:['Empresario individual (autónomo ordinario)','TRADE','Autónomo societario','Falso autónomo'],
+    items:[
+     {q:'Iván instala y revisa equipos de navegación en varias marinas de Menorca. Tiene decenas de clientes particulares, usa su furgoneta y sus herramientas, y fija él sus tarifas y su agenda.',a:0,why:'Trabaja por cuenta propia, con muchos clientes y organización propia: empresario individual.'},
+     {q:'Laia hace mantenimiento de motores para un solo varadero, que le aporta el 85 % de sus ingresos. Tiene contrato por escrito registrado en el SEPE, usa sus propias herramientas y organiza su calendario.',a:1,why:'Supera el 75 % de ingresos de un cliente, con contrato registrado, medios propios y organización propia: TRADE.'},
+     {q:'Toni figura como autónomo, pero ficha cada día a las 8:00 en el varadero, usa las herramientas del taller y su jefe le dice qué barcos tocan y cómo hacerlo. No tiene más clientes.',a:3,why:'Horario fijo, medios del cliente y órdenes: relación laboral encubierta. Su sitio es el Régimen General.'},
+     {q:'Sandra es socia y administradora de una SL de carpintería naval, controla de hecho la sociedad y cotiza en el RETA.',a:2,why:'Socia o administradora con el control efectivo de una sociedad mercantil: autónomo societario.'}
+    ]},
+  { id:'s2a5', code:'A5', kind:'auto', title:'Clasifica cuatro empresas náuticas por tamaño', ui:'select',
+    intro:'Aplica los umbrales de plantilla, volumen de negocio y balance (se cumple el límite de plantilla y uno de los dos límites económicos).',
+    opts:['Microempresa','Pequeña empresa','Mediana empresa'],
+    items:[
+     {q:'Taller de mecánica fueraborda: 4 personas, 600.000 € de volumen de negocio, balance de 350.000 €.',a:0,why:'Menos de 10 personas y menos de 2 M€: microempresa.'},
+     {q:'Astillero: 120 trabajadores, 30 M€ de volumen de negocio, balance de 25 M€.',a:2,why:'Más de 50 personas y menos de 250, con 30 M€ (hasta 50 M€) y 25 M€ (hasta 43 M€): mediana.'},
+     {q:'Empresa de chárter: 35 personas, 7 M€ de volumen de negocio, balance de 9 M€.',a:1,why:'Menos de 50 personas y menos de 10 M€ en ambos límites: pequeña.'},
+     {q:'Marina deportiva: 8 personas, 2,5 M€ de volumen de negocio, balance de 2,8 M€.',a:1,why:'Tiene menos de 10 personas, pero supera los 2 M€ de la micro en volumen y en balance. Entra como pequeña.'}
+    ]},
+  { id:'s2q', code:'Autoevaluación B01', kind:'auto', title:'Autoevaluación del bloque B01', ui:'radio',
+    intro:'Responde sin mirar los apuntes y comprueba después.',
+    items:[
+     {q:'¿Qué diferencia hay entre una persona emprendedora y una empresaria?',opts:['La emprendedora administra un negocio consolidado y la empresaria lo crea','La emprendedora crea y asume el riesgo inicial; la empresaria administra un negocio ya consolidado','Ninguna: son lo mismo','La emprendedora siempre tiene empleados'],a:1,why:'La emprendedora crea y asume el riesgo inicial; la empresaria administra lo ya consolidado.'},
+     {q:'Un autónomo contrata a tres empleados. ¿Sigue siendo autónomo?',opts:['No, pasa a ser una sociedad','No, pasa al Régimen General','Sí, la ley prevé que dé o no ocupación a trabajadores','Solo si tiene un máximo de dos empleados'],a:2,why:'El autónomo puede tener o no trabajadores a su cargo.'},
+     {q:'¿Qué requisito de ingresos tiene que cumplir un TRADE?',opts:['Al menos el 50 % de un solo cliente','Al menos el 75 % de un solo cliente (más otras condiciones del art. 11 LETA)','El 100 % de un solo cliente','Ninguno'],a:1,why:'Art. 11 LETA: al menos el 75 % de los ingresos de un solo cliente, además de otras condiciones.'},
+     {q:'¿En qué régimen de la Seguridad Social debería estar un falso autónomo?',opts:['RETA','Régimen del Mar','Régimen General','En ninguno'],a:2,why:'Es una relación laboral encubierta: Régimen General.'},
+     {q:'Una empresa tiene 45 personas, factura 8 M€ al año y su balance es de 12 M€. ¿Es micro, pequeña o mediana?',opts:['Microempresa','Pequeña empresa','Mediana empresa','Gran empresa'],a:1,why:'Menos de 50 personas y el volumen de negocio no supera 10 M€. Basta con que se cumpla uno de los dos límites económicos.'},
+     {q:'¿Asume un intraemprendedor el riesgo económico de la idea que propone?',opts:['Sí, todo','Sí, la mitad','No','Solo si la idea fracasa'],a:2,why:'El intraemprendedor no pone su dinero en juego.'}
+    ]}
+ ]
+},
+
+/* ---------------------------------------------------------- SESIÓN 3 */
+{
+ id:'s3', n:3, block:'B02', title:'Las formas jurídicas', ce:'1c',
+ goals:[
+  'Explicar qué es una forma jurídica y qué determina.',
+  'Distinguir responsabilidad limitada e ilimitada.',
+  'Reconocer las características de la empresa individual, la ERL, la SL, la SA, las sociedades laborales, las cooperativas, la sociedad civil, la comunidad de bienes y la AIE.',
+  'Diferenciar SL y SA, y sociedad civil y comunidad de bienes.'],
+ theory:`
+ <details class="acc" open><summary>Qué es una forma jurídica</summary><div class="body">
+  <p>Es la estructura legal que adopta un negocio para actuar en el mercado. Determina <b>quién responde de las deudas, cómo tributa, quién gobierna y qué trámites exige</b>. Cambiarla más tarde es posible, pero obliga a nuevos trámites.</p>
+  <p>Se agrupan en dos familias. En las <b>individuales</b> el negocio y la persona son lo mismo. En las <b>sociedades</b> el negocio es una persona jurídica distinta de sus socios.</p>
+  <div class="grid2">
+   <div class="callout info"><b class="t">Responsabilidad limitada</b>Los socios solo arriesgan el capital aportado. Las deudas de la sociedad no alcanzan su patrimonio personal.</div>
+   <div class="callout"><b class="t">Responsabilidad ilimitada</b>El empresario o los socios responden de las deudas con todo su patrimonio, presente y futuro.</div>
+  </div>
+  <div class="callout info"><b class="t">Analogía</b>La responsabilidad limitada funciona como un casco de seguridad: si el negocio se golpea, absorbe el daño y tu patrimonio personal queda protegido. Como empresario individual trabajas sin casco.</div>
+ </div></details>
+ <details class="acc"><summary>Tabla comparativa de formas jurídicas</summary><div class="body">
+  <div class="table-wrap"><table>
+   <tr><th>Forma</th><th>Socios mín.</th><th>Capital mínimo</th><th>Responsabilidad</th><th>Tributación</th></tr>
+   <tr><td>Empresario individual</td><td>1</td><td>Ninguno</td><td>Ilimitada</td><td>IRPF</td></tr>
+   <tr><td>ERL</td><td>1</td><td>Ninguno</td><td>Limitada para la vivienda habitual y los bienes afectos al negocio</td><td>IRPF</td></tr>
+   <tr><td>SL / SLU</td><td>1</td><td>Desde 1 €</td><td>Limitada al capital</td><td>Impuesto sobre Sociedades</td></tr>
+   <tr><td>SA / SAU</td><td>1</td><td>60.000 € (desembolsado al menos el 25 %)</td><td>Limitada al capital</td><td>Impuesto sobre Sociedades</td></tr>
+   <tr><td>Sociedad laboral (SLL / SAL)</td><td>3</td><td colspan="3"><i>Se completa en clase con la normativa de cada forma</i></td></tr>
+   <tr><td>Cooperativa</td><td>3 (2 en microcooperativas)</td><td colspan="2"><i>Se completa en clase</i></td><td>Régimen bonificado</td></tr>
+   <tr><td>Sociedad civil</td><td>2</td><td>Ninguno</td><td>Ilimitada y personal</td><td>IRPF de los socios</td></tr>
+   <tr><td>Comunidad de bienes</td><td>2</td><td>Ninguno</td><td>Ilimitada y personal</td><td>IRPF de los socios</td></tr>
+   <tr><td>AIE</td><td>2</td><td>Ninguno</td><td>Ilimitada</td><td><i>Se completa en clase</i></td></tr>
+  </table></div>
+  <p class="hint">AIE: Agrupación de Interés Económico, asociación de empresas o profesionales para actividades comunes, sin ánimo de lucro propio.</p>
+ </div></details>
+ <details class="acc"><summary>Dos confusiones habituales y cuatro detalles</summary><div class="body">
+  <ul class="goals">
+   <li><b>SL y SA:</b> la SL admite un capital desde 1 € y sus participaciones solo se transmiten con restricciones. La SA exige 60.000 € y sus acciones se venden libremente.</li>
+   <li><b>Sociedad civil y comunidad de bienes:</b> la primera nace de un contrato para hacer negocio; la segunda aparece porque varias personas ya son dueñas de lo mismo (por ejemplo, una herencia).</li>
+   <li>En una SL con capital inferior a 3.000 €, el 20 % de los beneficios va a reserva legal hasta llegar a esa cifra.</li>
+   <li>En una sociedad laboral, ningún socio puede tener más de un tercio del capital y la mayoría de los socios deben ser trabajadores con contrato indefinido.</li>
+   <li>En una cooperativa cada socio tiene un voto, aporte lo que aporte.</li>
+   <li>Una SLU debe inscribir la unipersonalidad en el Registro Mercantil. Si no lo hace durante más de seis meses, el socio único puede perder la protección de la responsabilidad limitada.</li>
+  </ul>
+ </div></details>
+ <details class="acc"><summary>Normativa de la sesión</summary><div class="body">
+  <ul class="goals">
+   <li><b>Ley 14/2013</b>, de apoyo a los emprendedores (arts. 7 a 11): crea el ERL. Su vivienda habitual queda fuera de las deudas del negocio si vale hasta <b>300.000 €</b> (450.000 € solo en municipios de más de un millón de habitantes, así que en Maó son 300.000 €). Exige inscripción en el Registro Mercantil.</li>
+   <li><b>Ley 18/2022</b>, de creación y crecimiento de empresas: permite constituir una SL con 1 € de capital y amplió la protección del ERL a los bienes afectos a la actividad.</li>
+  </ul>
+ </div></details>`,
+ activities:[
+  { id:'s3a1', code:'A1', kind:'auto', title:'Adivina la forma jurídica a partir de las pistas', ui:'select',
+    intro:'En clase se juega por equipos. Aquí puedes hacerlo individualmente: lee las pistas y elige la forma.',
+    opts:['Empresario individual','ERL','SL / SLU','SA / SAU','Sociedad laboral','Cooperativa','Sociedad civil','Comunidad de bienes'],
+    items:[
+     {q:'Un solo socio, sin capital mínimo, responde con todo su patrimonio y tributa por IRPF.',a:0,why:'Es la forma individual básica.'},
+     {q:'Capital desde 1 €, responsabilidad limitada al capital, tributa por Impuesto sobre Sociedades y sus participaciones se transmiten con restricciones.',a:2,why:'Rasgos típicos de la SL.'},
+     {q:'Capital mínimo de 60.000 € (al menos el 25 % desembolsado) y acciones libremente transmisibles.',a:3,why:'La SA exige 60.000 € y sus acciones se venden libremente.'},
+     {q:'Un socio, un voto, aporte lo que aporte. Gestión democrática.',a:5,why:'En una cooperativa cada socio tiene un voto.'},
+     {q:'Mínimo 3 socios, la mayoría del capital es de trabajadores con contrato indefinido y ningún socio supera un tercio del capital.',a:4,why:'Es la sociedad laboral.'},
+     {q:'Dos hermanos heredan un local y lo explotan en común. No hay contrato de sociedad: la copropiedad es previa.',a:7,why:'La comunidad de bienes nace de una copropiedad previa, como una herencia.'},
+     {q:'Dos socios firman un contrato para poner en común dinero y trabajo y repartir las ganancias. Responden personal e ilimitadamente.',a:6,why:'La sociedad civil nace de un contrato para hacer negocio.'},
+     {q:'Empresario individual que protege su vivienda habitual (hasta 300.000 €) mediante inscripción en el Registro Mercantil.',a:1,why:'Es el Emprendedor de Responsabilidad Limitada (Ley 14/2013).'}
+    ]},
+  { id:'s3a2', code:'A2', kind:'auto', title:'Completa la tabla comparativa y resuelve tres mini casos', ui:'grid',
+    intro:'Completa las celdas de la tabla. Después, resuelve los tres mini casos.',
+    grid:{
+     cols:[{name:'Capital mínimo',opts:['Ninguno','Desde 1 €','60.000 €']},{name:'Responsabilidad',opts:['Ilimitada','Limitada al capital']},{name:'Tributación',opts:['IRPF','Impuesto sobre Sociedades','IRPF de los socios']}],
+     rows:[
+      {label:'Empresario individual',a:[0,0,0]},
+      {label:'SL',a:[1,1,1]},
+      {label:'SA',a:[2,1,1]},
+      {label:'Sociedad civil',a:[0,0,2]},
+      {label:'Comunidad de bienes',a:[0,0,2]}
+     ]},
+    extra:[
+     {q:'Un empresario individual tiene una deuda de 20.000 € del negocio y no puede pagarla. ¿Con qué responde?',opts:['Solo con el dinero que tenga en la cuenta del negocio','Con todo su patrimonio, presente y futuro','Con nada: la deuda es del negocio','Solo con su vivienda'],a:1,why:'Responsabilidad ilimitada: responde con todo su patrimonio.'},
+     {q:'Una SL con 3.000 € de capital no puede pagar una deuda de 50.000 €. ¿Hasta dónde responden los socios?',opts:['Con todo su patrimonio personal','Solo con lo aportado a la sociedad','No responden de nada, ni siquiera con el capital','Con su vivienda habitual'],a:1,why:'Responsabilidad limitada: solo arriesgan el capital aportado.'},
+     {q:'Una SLU no inscribe la unipersonalidad en el Registro Mercantil durante más de seis meses. ¿Qué riesgo corre el socio único?',opts:['Ninguno','Puede perder la protección de la responsabilidad limitada','Tiene que convertirse en SA','Paga el doble de impuestos'],a:1,why:'Si no inscribe la unipersonalidad, el socio único puede perder la protección de la responsabilidad limitada.'}
+    ]}
+ ]
+},
+/* ---------------------------------------------------------- SESIÓN 4 */
+{
+ id:'s4', n:4, block:'B02', title:'Elegir entre autónomo y sociedad', ce:'1d',
+ goals:[
+  'Identificar los seis factores que influyen en la elección.',
+  'Comparar las ventajas e inconvenientes de ser autónomo y de constituir una sociedad.',
+  'Justificar una elección con un caso del sector náutico.'],
+ theory:`
+ <details class="acc" open><summary>Los seis factores de la elección</summary><div class="body">
+  <p>No hay una forma jurídica mejor en general: la adecuada depende del proyecto. Estos son los seis factores que más pesan.</p>
+  <div class="table-wrap"><table>
+   <tr><th>Factor</th><th>Pregunta que debes hacerte</th></tr>
+   <tr><td><b>Socios</b></td><td>¿Emprendo solo o con otras personas?</td></tr>
+   <tr><td><b>Capital</b></td><td>¿Cuánto dinero tengo para empezar?</td></tr>
+   <tr><td><b>Riesgo</b></td><td>¿Puedo permitirme que una deuda del negocio alcance mi patrimonio personal?</td></tr>
+   <tr><td><b>Fiscalidad</b></td><td>¿Me conviene tributar por IRPF o por Impuesto sobre Sociedades?</td></tr>
+   <tr><td><b>Trámites y coste</b></td><td>¿Cuánto tiempo y dinero cuesta constituirlo?</td></tr>
+   <tr><td><b>Imagen y transmisión</b></td><td>¿Cómo me verán clientes e inversores? ¿Podré vender o traspasar el negocio?</td></tr>
+  </table></div>
+  <div class="callout info"><b class="t">Analogía</b>Elegir forma jurídica se parece a elegir un menú: depende de cuántos comensales sois (socios), del presupuesto que traéis (capital) y de cuánto riesgo queréis asumir.</div>
+ </div></details>
+ <details class="acc"><summary>Autónomo frente a sociedad</summary><div class="body">
+  <div class="table-wrap"><table>
+   <tr><th></th><th>Autónomo (empresario individual)</th><th>Sociedad (SL, por ejemplo)</th></tr>
+   <tr><td><b>Ventajas</b></td><td>Alta rápida y barata. Sin capital mínimo. Gestión sencilla.</td><td>Responsabilidad limitada. Mayor imagen de solvencia. Participaciones transmisibles.</td></tr>
+   <tr><td><b>Inconvenientes</b></td><td>Responde con todo su patrimonio. El IRPF sube por tramos si crecen los beneficios.</td><td>Escritura notarial e inscripción en el Registro Mercantil. Más trámites y costes.</td></tr>
+  </table></div>
+  <p>La <b>ERL</b> es un punto intermedio: sigue siendo empresario individual, pero protege su vivienda habitual y los bienes del negocio si cumple los requisitos de la ley.</p>
+  <p>La fiscalidad pesa mucho cuando el negocio gana dinero. El IRPF tiene tramos progresivos. El Impuesto sobre Sociedades aplica un 25 % como tipo general, con tipos reducidos para microempresas y empresas de nueva creación. Un negocio con beneficios altos puede salir ganando como sociedad; uno pequeño o incierto suele empezar como autónomo.</p>
+  <p class="hint">Los tipos exactos del Impuesto sobre Sociedades se contrastan en la sede de la Agencia Tributaria antes de usarlos.</p>
+ </div></details>
+ <details class="acc"><summary>Ejemplo: Mantenimiento Náutico Menorca (caso ficticio)</summary><div class="body">
+  <p>Gemma, técnica en electricidad naval, y Pau, mecánico de motores, quieren montar juntos un servicio de mantenimiento e invernaje para embarcaciones de recreo. Cuentan con 8.000 € de ahorros entre los dos.</p>
+  <div class="table-wrap"><table>
+   <tr><th>Opción</th><th>Qué implica para ellos</th></tr>
+   <tr><td>Dos autónomos por separado</td><td>Cada uno responde con todo su patrimonio de sus propios trabajos. No comparten estructura ni imagen común.</td></tr>
+   <tr><td>Sociedad civil o comunidad de bienes</td><td>Sin capital mínimo, pero ambos responden personal e ilimitadamente de todas las deudas del negocio.</td></tr>
+   <tr><td>SL</td><td>Capital desde 1 €. Responden solo con lo aportado. Necesitan escritura notarial e inscripción registral.</td></tr>
+  </table></div>
+  <p>El riesgo es alto: trabajan con motores y sistemas eléctricos de embarcaciones que valen decenas de miles de euros, y un fallo puede generar una reclamación por daños. Eso inclina la decisión hacia la <b>SL</b>, aunque cueste más ponerla en marcha.</p>
+  <p>Si solo fuera Gemma quien emprende y viviera en un piso valorado en 250.000 €, podría valorar la <b>ERL</b>.</p>
+ </div></details>`,
+ activities:[
+  { id:'s4f', code:'Extra', kind:'auto', title:'Relaciona cada pregunta con su factor', ui:'select',
+    intro:'Cada pregunta corresponde a uno de los seis factores de elección.',
+    opts:['Socios','Capital','Riesgo','Fiscalidad','Trámites y coste','Imagen y transmisión'],
+    items:[
+     {q:'¿Emprendo solo o con otras personas?',a:0,why:'Es el factor «socios».'},
+     {q:'¿Cuánto dinero tengo para empezar?',a:1,why:'Es el factor «capital».'},
+     {q:'¿Puedo permitirme que una deuda del negocio alcance mi patrimonio personal?',a:2,why:'Es el factor «riesgo».'},
+     {q:'¿Me conviene tributar por IRPF o por Impuesto sobre Sociedades?',a:3,why:'Es el factor «fiscalidad».'},
+     {q:'¿Cuánto tiempo y dinero cuesta constituirlo?',a:4,why:'Es el factor «trámites y coste».'},
+     {q:'¿Cómo me verán clientes e inversores? ¿Podré traspasar el negocio?',a:5,why:'Es el factor «imagen y transmisión».'}
+    ]},
+  { id:'s4c', code:'Extra', kind:'auto', title:'¿Autónomo o sociedad?', ui:'select',
+    intro:'Indica a qué opción corresponde cada afirmación.',
+    opts:['Autónomo (empresario individual)','Sociedad (SL)'],
+    items:[
+     {q:'Alta rápida y barata, con gestión sencilla.',a:0,why:'Ventaja del autónomo.'},
+     {q:'Responsabilidad limitada al capital aportado.',a:1,why:'Ventaja de la sociedad.'},
+     {q:'El IRPF sube por tramos si los beneficios crecen.',a:0,why:'Inconveniente del autónomo.'},
+     {q:'Participaciones transmisibles y mayor imagen de solvencia.',a:1,why:'Ventajas de la sociedad.'},
+     {q:'Responde con todo su patrimonio personal.',a:0,why:'Inconveniente del autónomo.'},
+     {q:'Exige escritura notarial e inscripción en el Registro Mercantil.',a:1,why:'Inconveniente de la sociedad: más trámites y costes.'}
+    ]},
+  { id:'s4a3', code:'A3', kind:'aula', title:'Caso del creador de contenidos que prefirió constituir una SL',
+    desc:'Se trabaja en el aula con un caso real y público. Debes identificar tres factores de la elección con su razón. Los datos del caso se comprueban en clase.'},
+  { id:'s4a4', code:'A4', kind:'classroom', title:'Elige y justifica la forma jurídica de Mantenimiento Náutico Menorca',
+    desc:'Entrega por Classroom un informe de una página con la decisión y los factores. Tu profesor te dará variantes del caso (dos socios, un socio, vivienda de 250.000 €…).',
+    points:['Compara al menos tres formas jurídicas con capital, responsabilidad y trámites correctos.','Aplica al caso al menos cinco de los seis factores.','Elige una forma coherente con tus argumentos y plantea un riesgo de tu elección.','Entrega en plazo, con una presentación clara.']},
+  { id:'s4q', code:'Autoevaluación B02', kind:'auto', title:'Autoevaluación del bloque B02', ui:'radio',
+    intro:'Responde sin mirar los apuntes y comprueba después.',
+    items:[
+     {q:'¿Qué diferencia hay entre responsabilidad limitada e ilimitada?',opts:['En la limitada se responde solo con lo aportado a la sociedad; en la ilimitada también con el patrimonio personal','En la limitada se responde con todo el patrimonio; en la ilimitada solo con el capital','No hay diferencia','La limitada solo existe para las cooperativas'],a:0,why:'Limitada: solo lo aportado. Ilimitada: también el patrimonio personal.'},
+     {q:'¿Qué capital mínimo exige una SL y cuál una SA?',opts:['SL: 3.000 €. SA: 60.000 €','SL: desde 1 €. SA: 60.000 €, con al menos un 25 % desembolsado','SL: 60.000 €. SA: desde 1 €','Ninguna exige capital mínimo'],a:1,why:'SL desde 1 € (Ley 18/2022) y SA 60.000 € con al menos el 25 % desembolsado.'},
+     {q:'¿Cuántos socios necesita como mínimo una sociedad laboral y una cooperativa?',opts:['2 y 2','3 y 3 (la cooperativa admite 2 si es microcooperativa)','1 y 1','5 y 5'],a:1,why:'Tres en ambas; la microcooperativa admite dos.'},
+     {q:'¿En qué se diferencian la sociedad civil y la comunidad de bienes?',opts:['La sociedad civil nace de un contrato para hacer negocio; la comunidad de bienes nace de una copropiedad previa','La sociedad civil tiene responsabilidad limitada y la comunidad de bienes no','La comunidad de bienes exige 60.000 € de capital','No se diferencian'],a:0,why:'La primera se crea para hacer negocio; la segunda aparece porque varias personas ya son dueñas de lo mismo.'},
+     {q:'Un empresario individual vive en una vivienda de 250.000 € y quiere protegerla sin crear una sociedad. ¿Qué figura le sirve?',opts:['La SA','La comunidad de bienes','La ERL, porque su vivienda no supera 300.000 €','Ninguna'],a:2,why:'La ERL protege la vivienda habitual si vale hasta 300.000 € (en Maó).'},
+     {q:'¿Cuál de estas opciones recoge tres de los seis factores de elección de la forma jurídica?',opts:['Color del logotipo, nombre y horario','Socios, capital y riesgo','Marca, idioma y proveedores','Edad, estudios y aficiones'],a:1,why:'Los seis son: socios, capital, riesgo, fiscalidad, trámites y coste, e imagen y transmisión.'}
+    ]}
+ ]
+},
+
+/* ---------------------------------------------------------- SESIÓN 5 */
+{
+ id:'s5', n:5, block:'B03', title:'Normativa y medidas de fomento', ce:'1e · 1f',
+ goals:[
+  'Identificar las normas específicas para emprendedores y qué regula cada una.',
+  'Reconocer las medidas de fomento: cuotas reducidas a la Seguridad Social, incentivos fiscales y puntos de atención al emprendedor.'],
+ theory:`
+ <details class="acc" open><summary>Tres leyes para quien empieza</summary><div class="body">
+  <div class="table-wrap"><table>
+   <tr><th>Norma</th><th>Para qué te sirve</th></tr>
+   <tr><td><b>Ley 20/2007</b>, Estatuto del Trabajo Autónomo (LETA)</td><td>Define al autónomo y al TRADE, regula la cuota reducida a la Seguridad Social (art. 38 ter) y recoge las políticas de fomento del trabajo autónomo.</td></tr>
+   <tr><td><b>Ley 14/2013</b>, de apoyo a los emprendedores</td><td>Crea el ERL, los Puntos de Atención al Emprendedor (PAE) y la tramitación telemática de empresas (CIRCE).</td></tr>
+   <tr><td><b>Ley 18/2022</b>, de creación y crecimiento de empresas</td><td>Permite crear una SL con 1 € de capital.</td></tr>
+  </table></div>
+  <p>Las <b>medidas de fomento</b> son las ayudas concretas que nacen de esas políticas: ayudas, bonificaciones e incentivos públicos para facilitar que alguien inicie y mantenga una actividad económica.</p>
+  <div class="callout info"><b class="t">Analogía</b>Las medidas de fomento son un trampolín: no hacen el salto por ti, pero reducen el esfuerzo del primer impulso.</div>
+ </div></details>
+ <details class="acc"><summary>Las medidas que más importan al empezar</summary><div class="body">
+  <div class="table-wrap"><table>
+   <tr><th>Medida</th><th>Quién la ofrece</th><th>En qué consiste</th><th>Condiciones clave</th></tr>
+   <tr><td><b>Cuota reducida (tarifa plana)</b></td><td>Seguridad Social</td><td>12 meses de cuota reducida, ampliables 12 meses más si prevés ganar menos del SMI anual.</td><td>Alta inicial como autónomo, o 2 años sin estar de alta (3 si ya la disfrutaste).</td></tr>
+   <tr><td><b>Quota Zero</b></td><td>Govern de les Illes Balears</td><td>Devuelve el 100 % de la cuota reducida (máximo 80 € al mes) en los dos primeros años y el 50 % en el tercero (máximo 175 € al mes).</td><td>Estar empadronado y tener domicilio fiscal en Baleares, estar de alta en el RETA, el Régimen del Mar o una mutualidad, tener aplicada la cuota reducida y estar al corriente de obligaciones.</td></tr>
+   <tr><td><b>Tipo reducido del Impuesto sobre Sociedades</b></td><td>Hacienda</td><td>15 % durante los dos primeros ejercicios con beneficios.</td><td>Entidades de nueva creación.</td></tr>
+   <tr><td><b>Asesoramiento gratuito</b></td><td>ADR Balears y SOIB</td><td>Orientación, formación e información sobre ayudas, desde la idea hasta la puesta en marcha.</td><td>Personas que quieren emprender o consolidar un negocio.</td></tr>
+  </table></div>
+  <div class="callout"><b class="t">Una convocatoria real</b>La Quota Zero 2026 dispuso de 1.590.000 €, cubrió las cuotas devengadas entre el 1 de marzo de 2024 y el 30 de abril de 2026 y se concedió por orden de entrada. El plazo fue del 10 de mayo al 10 de junio de 2026, así que <b>ya está cerrada</b>. Las siguientes se publican en <a href="https://autonomsib.es" target="_blank" rel="noopener">autonomsib.es</a>.</div>
+  <p class="hint">El importe de la cuota reducida lo fija cada año la Ley de Presupuestos. Fue de 80 € al mes en 2023-2025; el de 2026 hay que confirmarlo en la sede de la Seguridad Social.</p>
+ </div></details>
+ <details class="acc"><summary>Por qué importa en la práctica</summary><div class="body">
+  <ul class="goals">
+   <li><b>Liquidez:</b> la Quota Zero se solicita sobre cuotas ya pagadas, así que hay que poder adelantar el dinero y esperar el reembolso.</li>
+   <li><b>Calendario:</b> los plazos pueden durar solo un mes y las ayudas se conceden por orden de entrada. Conviene tener la documentación lista antes de que se abra la convocatoria.</li>
+   <li><b>Estar al corriente:</b> casi todas las ayudas exigen no tener deudas con Hacienda, la Seguridad Social ni la comunidad autónoma.</li>
+  </ul>
+ </div></details>`,
+ activities:[
+  { id:'s5a1', code:'A1', kind:'auto', title:'Relaciona cada norma con lo que regula y resuelve cuatro casos', ui:'select',
+    intro:'Elige la norma que corresponde en cada caso.',
+    opts:['Ley 20/2007 (LETA)','Ley 14/2013, de apoyo a los emprendedores','Ley 18/2022, de creación y crecimiento de empresas'],
+    items:[
+     {q:'Define al autónomo y al TRADE y regula la cuota reducida a la Seguridad Social (art. 38 ter).',a:0,why:'Es la LETA.'},
+     {q:'Crea el ERL, los Puntos de Atención al Emprendedor y la tramitación telemática CIRCE.',a:1,why:'Es la Ley 14/2013.'},
+     {q:'Permite crear una SL con 1 € de capital.',a:2,why:'Es la Ley 18/2022.'},
+     {q:'Caso 1. Quiero que mi vivienda habitual quede fuera de las deudas de mi negocio como empresario individual.',a:1,why:'El ERL lo crea la Ley 14/2013 (la Ley 18/2022 amplió después la protección a bienes afectos).'},
+     {q:'Caso 2. Quiero constituir una SL aportando solo 1 € de capital.',a:2,why:'Lo permite la Ley 18/2022.'},
+     {q:'Caso 3. Quiero saber si el 75 % de mis ingresos de un solo cliente me convierte en TRADE.',a:0,why:'El TRADE se define en el art. 11 de la LETA.'},
+     {q:'Caso 4. Quiero tramitar la creación de mi empresa por internet con ayuda de un Punto de Atención al Emprendedor.',a:1,why:'PAE y CIRCE son de la Ley 14/2013.'}
+    ]},
+  { id:'s5a2', code:'A2', kind:'auto', title:'¿Cumplen los requisitos de la Quota Zero?', ui:'select',
+    intro:'Requisitos (convocatoria 2026): estar empadronado y con domicilio fiscal en Baleares, estar de alta en el RETA, el Régimen del Mar o una mutualidad, tener aplicada la cuota reducida y estar al corriente de obligaciones. Decide si cada persona los cumple.',
+    opts:['Cumple los requisitos','No cumple los requisitos'],
+    items:[
+     {q:'Marta está empadronada en Maó, tiene domicilio fiscal en Maó, está de alta en el RETA con la cuota reducida aplicada y está al corriente con Hacienda y la Seguridad Social.',a:0,why:'Cumple los cuatro requisitos.'},
+     {q:'Pere está empadronado en Ciutadella, pero su domicilio fiscal está en Barcelona. Está de alta en el RETA con la cuota reducida.',a:1,why:'Debe tener el domicilio fiscal en Baleares.'},
+     {q:'Aina está empadronada y con domicilio fiscal en Ibiza y de alta en el RETA con la cuota reducida, pero tiene una deuda pendiente con la Seguridad Social.',a:1,why:'No está al corriente de sus obligaciones.'}
+    ]},
+  { id:'s5q', code:'Extra', kind:'auto', title:'Repaso de las medidas de fomento', ui:'radio',
+    intro:'Tres preguntas rápidas sobre las medidas de la sesión.',
+    items:[
+     {q:'¿Cuánto dura la cuota reducida de la Seguridad Social y cuándo se puede ampliar?',opts:['6 meses, sin ampliación','12 meses, ampliables otros 12 si se prevén rendimientos netos por debajo del SMI anual','24 meses, ampliables a 36','Todo el primer año y medio, sin más'],a:1,why:'Son 12 meses ampliables otros 12 si se prevén rendimientos por debajo del SMI anual.'},
+     {q:'¿Qué devuelve la Quota Zero a un nuevo autónomo de Baleares?',opts:['El 100 % de la cuota reducida (máx. 80 € al mes) los dos primeros años y el 50 % el tercero (máx. 175 € al mes)','El 100 % de todas las cuotas, sin límite, durante cinco años','Un préstamo sin intereses','El 50 % del IRPF'],a:0,why:'100 % de la cuota reducida, con tope de 80 € al mes, en los dos primeros años, y 50 % en el tercero con tope de 175 €.'},
+     {q:'¿Qué tipo del Impuesto sobre Sociedades pagan las entidades de nueva creación en sus dos primeros ejercicios con beneficios?',opts:['25 %','23 %','15 %','0 %'],a:2,why:'Las entidades de nueva creación tributan al 15 % en esos ejercicios.'}
+    ]}
+ ]
+},
+/* ---------------------------------------------------------- SESIÓN 6 */
+{
+ id:'s6', n:6, block:'B03', title:'Ayudas y financiación en las Illes Balears', ce:'1g',
+ goals:[
+  'Distinguir financiación propia y ajena, y subvención y préstamo.',
+  'Reconocer los organismos de Baleares y de ámbito estatal a los que acudir.',
+  'Buscar en portales oficiales ayudas aplicables a un negocio náutico de Menorca.'],
+ theory:`
+ <details class="acc" open><summary>Financiación propia y ajena</summary><div class="body">
+  <div class="grid2">
+   <div class="callout info"><b class="t">Financiación propia</b>Lo que aportan los socios y los beneficios que se reinvierten. No hay que devolverlo a terceros.</div>
+   <div class="callout"><b class="t">Financiación ajena</b>Préstamos, créditos, avales y ayudas. Hay que devolverla o cumplir las condiciones.</div>
+  </div>
+  <div class="table-wrap"><table>
+   <tr><th>Concepto</th><th>Qué significa</th></tr>
+   <tr><td><b>Subvención</b></td><td>Dinero que no hay que devolver si se cumplen las condiciones de la convocatoria. Casi siempre se cobra después de justificar el gasto.</td></tr>
+   <tr><td><b>Préstamo</b></td><td>Se recibe todo el dinero al principio y se pagan intereses por el total.</td></tr>
+   <tr><td><b>Línea de crédito</b></td><td>El banco pone un límite a tu disposición y los intereses se pagan solo por lo que usas.</td></tr>
+   <tr><td><b>Préstamo participativo</b></td><td>Intereses con una parte fija y otra ligada a los beneficios de la empresa. No exige avales personales (lo usa ENISA).</td></tr>
+   <tr><td><b>Aval y SGR</b></td><td>Garantía que respalda un préstamo ante el banco. ISBA SGR es la sociedad de garantía de las Illes Balears y no tiene ánimo de lucro.</td></tr>
+   <tr><td><b>Convocatoria</b></td><td>Anuncio oficial de una ayuda, con requisitos, plazos, presupuesto y forma de pedirla.</td></tr>
+  </table></div>
+  <div class="callout info"><b class="t">Analogía</b>La financiación es el combustible del barco. La propia es el depósito que llevas de casa. La ajena es el combustible que repostas a crédito: te permite llegar más lejos, pero tendrás que pagarlo.</div>
+ </div></details>
+ <details class="acc"><summary>Dónde acudir en Menorca y Baleares</summary><div class="body">
+  <div class="table-wrap"><table>
+   <tr><th>Organismo</th><th>Qué ofrece</th><th>Para quién</th></tr>
+   <tr><td><b>Ibemprèn</b> (ADR Balears y SOIB)</td><td>Orientación, tutoría, cursos gratuitos, información sobre ayudas y análisis de viabilidad. Sede de ADR Balears en el Centre Empresarial de Menorca.</td><td>Personas con una idea de negocio o un negocio en marcha.</td></tr>
+   <tr><td><b>SOIB Empreses</b></td><td>Asesoramiento sobre contratación, selección y formación de personal.</td><td>Empresas nuevas y en marcha.</td></tr>
+   <tr><td><b>Fundació BIT</b>, programa #Emprenbit</td><td>Validación del modelo de negocio, mentoría y espacios de trabajo a bajo coste en el CentreBit Menorca (Alaior).</td><td>Proyectos innovadores.</td></tr>
+   <tr><td><b>ISBA SGR</b> con el Govern</td><td>Avales y préstamos con condiciones ventajosas para inversión y liquidez.</td><td>Autónomos y pymes con actividad en Baleares.</td></tr>
+   <tr><td><b>ENISA</b></td><td>Préstamos participativos para pymes de reciente creación, sin avales personales.</td><td>Pymes jóvenes con proyecto innovador.</td></tr>
+   <tr><td><b>ICO Empresas y Emprendedores</b></td><td>Préstamo, leasing, renting o línea de crédito de 1 a 20 años, con hasta 3 años de carencia. Se pide en el banco.</td><td>Autónomos y emprendedores.</td></tr>
+   <tr><td><b>Economía social del Govern</b></td><td>Fomento del empleo y la competitividad.</td><td>Cooperativas, sociedades laborales y empresas de inserción.</td></tr>
+  </table></div>
+  <p class="hint">El ICO no presta directamente: lo hace a través de las entidades de crédito, que fijan el tipo de interés. Comprueba siempre las condiciones vigentes en la web de cada organismo.</p>
+ </div></details>
+ <details class="acc"><summary>Cómo se hace una búsqueda de ayudas completa</summary><div class="body">
+  <ol class="goals">
+   <li>Define quién eres: autónomo o sociedad, sector, isla y fase del negocio.</li>
+   <li>Consulta los portales oficiales: PIEIB, autonomsib.es y el buscador de ayudas de ADR Balears.</li>
+   <li>Anota de cada ayuda el organismo, qué cubre, los requisitos y el plazo.</li>
+   <li>Comprueba si la convocatoria está abierta o ya ha cerrado.</li>
+   <li>Compara y descarta las que no cumplas.</li>
+  </ol>
+ </div></details>
+ <details class="acc"><summary>Ejemplo: Marta necesita 18.000 € (caso ficticio)</summary><div class="body">
+  <p>Marta se acaba de dar de alta como empresaria individual en Maó. Necesita una furgoneta equipada y herramientas por 18.000 €. Dispone de 6.000 € de ahorros, así que le faltan 12.000 €.</p>
+  <div class="table-wrap"><table>
+   <tr><th>Necesidad</th><th>Vía que puede explorar</th></tr>
+   <tr><td>Pagar menos cuota a la Seguridad Social</td><td>Cuota reducida y, cuando se abra la convocatoria, Quota Zero.</td></tr>
+   <tr><td>Resolver dudas de trámites y viabilidad</td><td>Ibemprèn y SOIB, sede de ADR Balears en Menorca.</td></tr>
+   <tr><td>Validar su idea con otros emprendedores</td><td>#Emprenbit en el CentreBit Menorca.</td></tr>
+   <tr><td>Financiar los 12.000 € que le faltan</td><td>Préstamo bancario con aval de ISBA SGR, o línea ICO pedida en su banco.</td></tr>
+  </table></div>
+ </div></details>`,
+ activities:[
+  { id:'s6a0', code:'Extra', kind:'auto', title:'Financiación propia o ajena', ui:'select',
+    intro:'Clasifica cada fuente de financiación.',
+    opts:['Financiación propia','Financiación ajena'],
+    items:[
+     {q:'Los ahorros de la socia.',a:0,why:'Dinero aportado por los socios: propia.'},
+     {q:'Un préstamo bancario.',a:1,why:'Hay que devolverlo con intereses: ajena.'},
+     {q:'Beneficios reinvertidos en la empresa.',a:0,why:'Beneficios que se quedan en la empresa: propia.'},
+     {q:'Una línea ICO Empresas y Emprendedores.',a:1,why:'Se pide al banco y se devuelve: ajena.'},
+     {q:'El aval de ISBA SGR para un préstamo.',a:1,why:'Respalda financiación ajena ante el banco.'},
+     {q:'El capital aportado por los socios al constituir la sociedad.',a:0,why:'Lo ponen los socios: propia.'}
+    ]},
+  { id:'s6a1', code:'Extra', kind:'auto', title:'¿Qué organismo ofrece qué?', ui:'select',
+    intro:'Une cada servicio con el organismo que lo ofrece.',
+    opts:['Ibemprèn (ADR Balears y SOIB)','SOIB Empreses','Fundació BIT · #Emprenbit','ISBA SGR','ENISA','ICO'],
+    items:[
+     {q:'Orientación, tutoría y análisis de viabilidad gratuitos para quien tiene una idea de negocio.',a:0,why:'Es el servicio Ibemprèn.'},
+     {q:'Asesoramiento para contratar, seleccionar y formar personal.',a:1,why:'Es SOIB Empreses.'},
+     {q:'Validación del modelo de negocio y espacios de trabajo a bajo coste en el CentreBit Menorca.',a:2,why:'Es #Emprenbit de la Fundació BIT.'},
+     {q:'Avales y préstamos con condiciones ventajosas para autónomos y pymes de Baleares.',a:3,why:'ISBA SGR es la sociedad de garantía recíproca de las Illes Balears.'},
+     {q:'Préstamo participativo sin avales personales para pymes jóvenes e innovadoras.',a:4,why:'Es ENISA.'},
+     {q:'Préstamo, leasing o renting de 1 a 20 años que se solicita en las entidades de crédito.',a:5,why:'Es la línea ICO Empresas y Emprendedores.'}
+    ]},
+  { id:'s6a3', code:'A3', kind:'classroom', title:'Búsqueda de ayudas y financiación para un negocio náutico de Menorca',
+    desc:'Se empieza en clase con ordenadores y se puede terminar fuera del aula. Entrega por Classroom una ficha de cinco ayudas o líneas de financiación, con enlaces a las fuentes.',
+    points:['Usa portales oficiales (PIEIB, autonomsib.es, buscador de ayudas de ADR Balears) y pon el enlace de cada ayuda.','Anota de cada una el organismo, qué cubre, los requisitos y el plazo.','Indica si está abierta o cerrada y si te sirve para un negocio de mantenimiento náutico.','Entrega en plazo, con una presentación clara.']},
+  { id:'s6a4', code:'A4', kind:'auto', title:'¿De dónde salen los 12.000 € que le faltan a Marta?', ui:'radio',
+    intro:'Marta necesita 18.000 € para la furgoneta y las herramientas y tiene 6.000 € de ahorros. Marca todas las fuentes razonables para cubrir los 12.000 € restantes.',
+    items:[
+     {q:'¿Qué fuentes son adecuadas para financiar los 12.000 € que le faltan a Marta?',ui:'multi',opts:['Un préstamo bancario con aval de ISBA SGR','Una línea ICO Empresas y Emprendedores pedida en su banco','Un préstamo participativo de ENISA (Marta es empresaria individual, no una sociedad innovadora)','La Quota Zero, que devuelve cuotas de la Seguridad Social','Las ayudas de economía social para cooperativas y sociedades laborales','El servicio SOIB Empreses (asesoramiento sobre contratación de personal)'],a:[0,1],why:'Un préstamo con aval de ISBA SGR y una línea ICO son financiación para inversión. ENISA es para pymes jóvenes e innovadoras; la Quota Zero devuelve cuotas, no financia inversión; la economía social es para cooperativas y sociedades laborales; y SOIB Empreses asesora sobre personal.'}
+    ]},
+  { id:'s6a4b', code:'A4 (escrita)', kind:'classroom', title:'Plan de financiación de una página para el caso de Marta',
+    desc:'Redacta un plan de una página con las fuentes que eliges y las razones, mezclando financiación propia y ajena. Tu profesor indicará si se entrega por Classroom o se corrige en clase.'},
+  { id:'s6q', code:'Autoevaluación B03', kind:'auto', title:'Autoevaluación del bloque B03', ui:'radio',
+    intro:'Responde sin mirar los apuntes y comprueba después.',
+    items:[
+     {q:'¿Qué diferencia hay entre una subvención y un préstamo?',opts:['La subvención no se devuelve si se cumplen las condiciones; el préstamo sí, con intereses','La subvención se devuelve con intereses y el préstamo no','No hay diferencia','El préstamo solo lo dan las empresas'],a:0,why:'La subvención no se devuelve si se cumplen las condiciones; el préstamo sí.'},
+     {q:'¿Qué ayuda del Govern devuelve a nuevos autónomos de Baleares el 100 % de la cuota reducida en los dos primeros años?',opts:['El ICO','La Quota Zero','ENISA','#Emprenbit'],a:1,why:'Es la Quota Zero.'},
+     {q:'¿Cuánto dura la cuota reducida de la Seguridad Social y cuándo se puede ampliar?',opts:['12 meses, ampliables otros 12 si se prevén rendimientos netos por debajo del SMI anual','6 meses, sin ampliación','36 meses seguidos','Hasta que el autónomo gane más del SMI'],a:0,why:'12 meses, ampliables otros 12 si se prevén rendimientos por debajo del SMI.'},
+     {q:'¿Qué entidad concede avales a pymes y autónomos de Baleares?',opts:['ISBA SGR, con el apoyo del Govern','El SEPE','El Registro Mercantil','El ICEX'],a:0,why:'ISBA SGR es la sociedad de garantía recíproca de las Illes Balears.'},
+     {q:'¿Dónde se solicita una línea ICO Empresas y Emprendedores?',opts:['En la Seguridad Social','En las entidades de crédito','En el Registro Mercantil','En ADR Balears'],a:1,why:'El ICO no presta directamente: lo hace a través de las entidades de crédito.'},
+     {q:'¿Cuál de estas opciones recoge pasos correctos de una búsqueda completa de ayudas?',opts:['Pedir todas las ayudas sin leer los requisitos','Definir quién eres, consultar portales oficiales, anotar requisitos y plazos y comprobar si la convocatoria está abierta','Buscar solo en redes sociales','Esperar a que te avisen'],a:1,why:'Define quién eres, consulta portales oficiales, anota requisitos y plazos, comprueba si está abierta y compara.'}
+    ]}
+ ]
+}
+];
+
+/* ====== RECURSOS ====== */
+const LINKS = [
+ {t:'Estatuto del Trabajo Autónomo (Ley 20/2007)',d:'Texto oficial en el BOE: art. 1 (autónomo) y art. 11 (TRADE).',u:'https://www.boe.es/eli/es/l/2007/07/11/20'},
+ {t:'Ley 14/2013 de apoyo a los emprendedores',d:'ERL, Puntos de Atención al Emprendedor y tramitación telemática.',u:'https://www.boe.es/eli/es/l/2013/09/27/14'},
+ {t:'Ley 18/2022 de creación y crecimiento de empresas',d:'SL con 1 € de capital y mejoras para emprendedores.',u:'https://www.boe.es/eli/es/l/2022/09/28/18'},
+ {t:'Recomendación 2003/361/CE (definición de PYME)',d:'Umbrales de plantilla, volumen de negocio y balance.',u:'https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32003H0361'},
+ {t:'autonomsib.es · Autónomos de las Illes Balears',d:'Convocatorias del Govern, entre ellas la Quota Zero.',u:'https://autonomsib.es'},
+ {t:'ADR Balears',d:'Agencia de Desarrollo Regional: apoyo a emprendedores y empresas (servicio Ibemprèn).',u:'https://www.adrbalears.es'},
+ {t:'Fundació BIT · CentreBit Menorca',d:'Programa #Emprenbit y espacios de trabajo en Alaior.',u:'https://fundaciobit.org'},
+ {t:'ICO · Empresas y Emprendedores',d:'Condiciones de la línea de financiación del ICO.',u:'https://www.ico.es'},
+ {t:'ENISA · Empresa Nacional de Innovación',d:'Préstamos participativos para pymes innovadoras.',u:'https://www.enisa.es'},
+ {t:'ISBA SGR · Sociedad de garantía de las Illes Balears',d:'Búsqueda en Google para encontrar su web oficial y sus líneas vigentes.',u:'https://www.google.com/search?q=ISBA+SGR+Illes+Balears'},
+ {t:'Portal d\'Impuls Empresarial (PIEIB)',d:'Búsqueda en Google para localizar el portal que agrupa ayudas y servicios del Govern.',u:'https://www.google.com/search?q=Portal+d%27Impuls+Empresarial+de+les+Illes+Balears+PIEIB'},
+ {t:'Agencia Tributaria · Impuesto sobre Sociedades',d:'Comprueba aquí los tipos vigentes antes de usarlos.',u:'https://sede.agenciatributaria.gob.es'}
+];
+const VIDEOS = [
+ {t:'Emprendedor, empresario e intraemprendedor',q:'emprendedor empresario intraemprendedor diferencias explicación',s:'Busca vídeos de menos de 10 minutos que comparen los tres conceptos con ejemplos.',id:''},
+ {t:'Por qué fracasan las empresas',q:'por qué fracasan los negocios Kodak Blockbuster Fyre Festival',s:'Busca casos reales de fracaso y compáralos con las causas de la sesión 1.',id:''},
+ {t:'Autónomo económicamente dependiente (TRADE)',q:'autónomo económicamente dependiente TRADE requisitos 75% contrato',s:'Comprueba que cite el 75 % de ingresos y el contrato registrado.',id:''},
+ {t:'Falso autónomo: cómo detectarlo',q:'falso autónomo qué es cómo detectarlo inspección de trabajo',s:'Fíjate en las señales: horario, órdenes y medios del cliente.',id:''},
+ {t:'Qué es una PYME y cómo se clasifica',q:'definición de pyme microempresa pequeña mediana criterios Comisión Europea',s:'Comprueba que use los umbrales vigentes (50 M€ y 43 M€ para la mediana).',id:''},
+ {t:'Formas jurídicas: autónomo, SL o SA',q:'formas jurídicas de empresa autónomo SL SA diferencias responsabilidad',s:'Busca los que comparen capital, responsabilidad y tributación.',id:''},
+ {t:'Emprendedor de Responsabilidad Limitada (ERL)',q:'emprendedor de responsabilidad limitada ERL vivienda habitual explicación',s:'Comprueba el límite de 300.000 € para la vivienda.',id:''},
+ {t:'Financiación para emprender: subvención, préstamo y aval',q:'financiación para emprendedores subvención préstamo aval sociedad de garantía recíproca',s:'Busca una explicación de las diferencias entre ayudas que se devuelven y las que no.',id:''}
+];
+
+/* ===== CONFIGURACIÓN (edita solo este bloque) ===== */
+const CONFIG = {
+  // URL del flujo de Power Automate con disparador "Cuando se recibe una solicitud HTTP".
+  // Déjala vacía si aún no lo has creado: la web ofrecerá enviar el resultado con el correo del alumno.
+  WEBHOOK_URL: "",
+  // Dirección que recibe los resultados cuando se usa el envío alternativo por correo.
+  TEACHER_EMAIL: "jpons@centredelamar.com",
+  UNIDAD: "UD1 · IB2301 Autoocupació i emprenedoria"
+};
+
+/* ===== utilidades ===== */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => (Math.round(n*10)/10).toString().replace('.', ',');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const state = {
+  id: store.get('ud1:id'),                // {name, group}
+  done: store.get('ud1:done') || {},      // {s1:{score, ts, sent}}
+  practice: {}                            // sesiones en modo práctica
+};
+
+/* ===== render de actividades ===== */
+function optHTML(name, i, text, type){
+  return `<label class="opt"><input type="${type}" name="${name}" value="${i}"><span>${text}</span></label>`;
+}
+function itemUI(a, it){ return it.ui || a.ui; }
+
+function renderAutoQuestion(a, it, qi, sharedOpts){
+  const name = `${a.id}__${qi}`;
+  const ui = itemUI(a, it);
+  let body = '';
+  if(ui === 'select'){
+    const opts = sharedOpts || it.opts;
+    body = `<select class="sel" name="${name}" aria-label="Respuesta"><option value="">Elige una opción…</option>${opts.map((o,i)=>`<option value="${i}">${esc(o)}</option>`).join('')}</select>`;
+  } else if(ui === 'multi'){
+    body = `<fieldset>${it.opts.map((o,i)=>optHTML(name,i,esc(o),'checkbox')).join('')}</fieldset><p class="hint">Puede haber más de una respuesta correcta.</p>`;
+  } else {
+    body = `<fieldset>${it.opts.map((o,i)=>optHTML(name,i,esc(o),'radio')).join('')}</fieldset>`;
+  }
+  return `<div class="q" data-q="${qi}" data-ui="${ui}"><div class="qt"><span class="qn">${qi+1}.</span>${esc(it.q)}</div>${body}<div class="fbslot"></div></div>`;
+}
+
+function renderGrid(a){
+  const g = a.grid;
+  let h = `<div class="table-wrap"><table class="gridtab"><tr><th></th>${g.cols.map(c=>`<th>${esc(c.name)}</th>`).join('')}</tr>`;
+  g.rows.forEach((r,ri)=>{
+    h += `<tr><th scope="row">${esc(r.label)}</th>` + g.cols.map((c,ci)=>
+      `<td class="cell" data-r="${ri}" data-c="${ci}"><select class="sel" name="${a.id}__g${ri}_${ci}" aria-label="${esc(r.label)} · ${esc(c.name)}"><option value="">Elige…</option>${c.opts.map((o,i)=>`<option value="${i}">${esc(o)}</option>`).join('')}</select><span class="why"></span></td>`).join('') + `</tr>`;
+  });
+  return h + `</table></div>`;
+}
+
+function renderActivity(a){
+  if(a.kind !== 'auto'){
+    const label = a.kind === 'classroom' ? 'Se entrega por Classroom' : 'Actividad de aula';
+    const ico = a.kind === 'classroom' ? '📎' : '🗣️';
+    const pts = a.points ? `<p><b>Cómo se valora:</b></p><ul class="goals">${a.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>` : '';
+    return `<section class="act" id="act-${a.id}"><div class="act-head"><span class="act-code">${esc(a.code)}</span><h4>${esc(a.title)}</h4><span class="badge cls">${label}</span></div>
+      <div class="act-body"><div class="cls-box"><div class="ico" aria-hidden="true">${ico}</div><div><p>${esc(a.desc)}</p>${pts}</div></div></div></section>`;
+  }
+  let inner = a.intro ? `<p>${esc(a.intro)}</p>` : '';
+  if(a.ui === 'grid'){
+    inner += renderGrid(a);
+    if(a.extra){ inner += `<h4 style="margin-top:18px">Mini casos</h4>` + a.extra.map((it,i)=>renderAutoQuestion({id:a.id,ui:'radio'}, it, i+100)).join(''); }
+  } else {
+    inner += a.items.map((it,i)=>renderAutoQuestion(a, it, i, a.opts)).join('');
+  }
+  return `<section class="act" id="act-${a.id}" data-act="${a.id}"><div class="act-head"><span class="act-code">${esc(a.code)}</span><h4>${esc(a.title)}</h4><span class="badge auto">Autocorregible</span></div><div class="act-body">${inner}</div></section>`;
+}
+
+function renderSession(s){
+  const autos = s.activities.filter(a=>a.kind==='auto');
+  return `
+  <div class="card">
+    <div class="meta"><span class="pill brand">Sesión ${s.n} · ${s.block}</span><span class="pill">55 min</span><span class="pill">Criterio ${esc(s.ce)}</span></div>
+    <h2>${esc(s.title)}</h2>
+    <h4>Al terminar esta sesión sabrás…</h4>
+    <ul class="goals">${s.goals.map(g=>`<li>${esc(g)}</li>`).join('')}</ul>
+  </div>
+  <h3 class="sect-title">Lo esencial</h3>
+  ${s.theory}
+  <h3 class="sect-title">Actividades</h3>
+  <p class="hint">Las actividades <b>autocorregibles</b> se responden aquí y se corrigen cuando envías la sesión. Las demás se explican y se hacen en clase o en Classroom.</p>
+  <div id="notice-${s.id}"></div>
+  ${s.activities.map(renderActivity).join('')}
+  ${autos.length ? `<div class="submit-bar" id="bar-${s.id}">
+      <div class="progress"><span id="prog-${s.id}">0 de 0 respondidas</span><div class="bar"><i id="barfill-${s.id}"></i></div></div>
+      <button class="btn" id="send-${s.id}">Enviar actividades de la sesión ${s.n}</button>
+    </div><div id="result-${s.id}"></div>` : ''}`;
+}
+
+/* ===== recuento y corrección ===== */
+function unitsOf(a){
+  // devuelve la lista de "unidades" calificables de una actividad autocorregible
+  const u = [];
+  if(a.ui === 'grid'){
+    a.grid.rows.forEach((r,ri)=>a.grid.cols.forEach((c,ci)=>u.push({kind:'cell',ri,ci,a:r.a[ci],name:`${a.id}__g${ri}_${ci}`})));
+    (a.extra||[]).forEach((it,i)=>u.push({kind:'radio',qi:i+100,it,name:`${a.id}__${i+100}`}));
+  } else {
+    a.items.forEach((it,i)=>{
+      const ui = itemUI(a,it);
+      u.push({kind: ui==='select'?'select':ui==='multi'?'multi':'radio', qi:i, it, name:`${a.id}__${i}`, sel: a.opts});
+    });
+  }
+  return u;
+}
+function valueOf(panel, u){
+  if(u.kind==='multi') return $$(`input[name="${u.name}"]:checked`,panel).map(x=>+x.value);
+  if(u.kind==='radio'){ const c=$(`input[name="${u.name}"]:checked`,panel); return c ? +c.value : null; }
+  const s=$(`select[name="${u.name}"]`,panel); return s && s.value!=='' ? +s.value : null;
+}
+function answered(v){ return Array.isArray(v) ? v.length>0 : v!==null; }
+
+function countAnswered(sess, panel){
+  let t=0, r=0;
+  sess.activities.filter(a=>a.kind==='auto').forEach(a=>unitsOf(a).forEach(u=>{ t++; if(answered(valueOf(panel,u))) r++; }));
+  return {t,r};
+}
+function updateProgress(sess, panel){
+  const {t,r} = countAnswered(sess,panel);
+  const p = $(`#prog-${sess.id}`); if(p) p.textContent = `${r} de ${t} respondidas`;
+  const b = $(`#barfill-${sess.id}`); if(b) b.style.width = (t? r/t*100 : 0)+'%';
+}
+
+function gradeActivity(a, panel){
+  const box = $(`#act-${a.id}`, panel);
+  let sum=0, total=0, ans=0;
+  const units = unitsOf(a);
+  units.forEach(u=>{
+    const v = valueOf(panel,u);
+    total++; if(answered(v)) ans++;
+    let frac=0;
+    if(u.kind==='cell'){
+      frac = v===u.a ? 1 : 0;
+      const cell = $(`td.cell[data-r="${u.ri}"][data-c="${u.ci}"]`, box);
+      cell.classList.add(frac?'ok':'bad');
+      if(!frac){ $('.why',cell).textContent = 'Correcto: ' + a.grid.cols[u.ci].opts[u.a]; }
+    } else if(u.kind==='multi'){
+      const right = u.it.a, got = v||[];
+      const hits = got.filter(x=>right.includes(x)).length, wrong = got.filter(x=>!right.includes(x)).length;
+      frac = Math.max(0,(hits-wrong)/right.length);
+      const q = $(`.q[data-q="${u.qi}"]`, box);
+      q.classList.add(frac===1?'ok':'bad');
+      $$('.opt',q).forEach((o,i)=>{ if(right.includes(i)) o.classList.add('right'); if(got.includes(i)) o.classList.add('chosen'); });
+      $('.fbslot',q).innerHTML = `<div class="fb ${frac===1?'ok':'bad'}"><b>${frac===1?'Correcto':(frac>0?'Parcialmente correcto':'Incorrecto')}</b><span>${esc(u.it.why)}</span></div>`;
+    } else {
+      const right = u.it.a;
+      frac = v===right ? 1 : 0;
+      const q = $(`.q[data-q="${u.qi}"]`, box);
+      q.classList.add(frac?'ok':'bad');
+      const opts = u.kind==='select' ? a.opts : u.it.opts;
+      if(u.kind==='radio'){
+        $$('.opt',q).forEach((o,i)=>{ if(i===right) o.classList.add('right'); if(i===v) o.classList.add('chosen'); });
+      }
+      const sel = $('select',q); if(sel){ sel.classList.add(frac?'ok':'bad'); }
+      $('.fbslot',q).innerHTML = `<div class="fb ${frac?'ok':'bad'}"><b>${frac?'Correcto':(v===null?'Sin responder':'Incorrecto')}${frac?'':' · Respuesta correcta: '+esc(opts[right])}</b><span>${esc(u.it.why)}</span></div>`;
+    }
+    sum += frac;
+  });
+  return {codigo:a.code, titulo:a.title, aciertos:Math.round(sum*100)/100, total, respondidas:ans, nota:Math.round(sum/total*100)/10};
+}
+function lockPanel(panel, lock){
+  $$('input,select', panel).forEach(el=>{ if(el.closest('.act-body')) el.disabled = lock; });
+}
+function resetActivities(sess, panel){
+  $$('.act[data-act]', panel).forEach(box=>{
+    $$('input',box).forEach(i=>{ i.checked=false; });
+    $$('select',box).forEach(s=>{ s.value=''; s.classList.remove('ok','bad'); });
+    $$('.q',box).forEach(q=>{ q.classList.remove('ok','bad'); $('.fbslot',q).innerHTML=''; $$('.opt',q).forEach(o=>o.classList.remove('right','chosen')); });
+    $$('td.cell',box).forEach(c=>{ c.classList.remove('ok','bad'); $('.why',c).textContent=''; });
+  });
+}
+
+/* ===== diálogos ===== */
+function askConfirm(title, text, okLabel='Continuar'){
+  return new Promise(res=>{
+    const d = $('#cfDlg'); $('#cfTitle').textContent = title; $('#cfText').textContent = text; $('#cfOk').textContent = okLabel;
+    const done = v => { d.close(); res(v); };
+    $('#cfOk').onclick = ()=>done(true); $('#cfNo').onclick = ()=>done(false);
+    d.oncancel = e=>{ e.preventDefault(); done(false); };
+    d.showModal();
+  });
+}
+function openIdentity(){
+  return new Promise(res=>{
+    const d = $('#idDlg'); const f = $('#idForm');
+    $('#idName').value = state.id ? state.id.name : ''; $('#idGroup').value = state.id ? state.id.group : '';
+    $('#idErr').textContent = '';
+    f.onsubmit = e=>{
+      e.preventDefault();
+      const name = $('#idName').value.trim().replace(/\s+/g,' '), group = $('#idGroup').value.trim().toUpperCase();
+      if(name.length < 3){ $('#idErr').textContent = 'Escribe tu nombre y apellidos.'; $('#idName').focus(); return; }
+      if(group.length < 2){ $('#idErr').textContent = 'Escribe el código de tu grupo.'; $('#idGroup').focus(); return; }
+      state.id = {name, group}; store.set('ud1:id', state.id); refreshWho(); d.close(); res(true);
+    };
+    $('#idCancel').onclick = ()=>{ d.close(); res(false); };
+    d.oncancel = ()=>res(false);
+    d.showModal(); setTimeout(()=>$('#idName').focus(),30);
+  });
+}
+async function requireIdentity(){ if(state.id) return true; return openIdentity(); }
+function refreshWho(){
+  const w = $('#who'); w.textContent = state.id ? `👤 ${state.id.name} · ${state.id.group}` : '👤 Identifícate';
+}
+
+/* ===== envío ===== */
+function buildPayload(sess, acts, total, practice){
+  const aciertosTot = acts.reduce((s,a)=>s+a.aciertos,0), unidades = acts.reduce((s,a)=>s+a.total,0);
+  const resp = acts.reduce((s,a)=>s+a.respondidas,0);
+  const nota = Math.round(aciertosTot/unidades*100)/10;
+  const resumen = [
+    `${CONFIG.UNIDAD}`, `Sesión ${sess.n} (${sess.block}) · ${sess.title}`,
+    `Alumno/a: ${state.id.name}`, `Grupo: ${state.id.group}`,
+    `Nota de la sesión: ${fmt(nota)} / 10  (${resp} de ${unidades} respondidas)`, '',
+    ...acts.map(a=>`- ${a.codigo} · ${a.titulo}: ${fmt(a.nota)} / 10 (${fmt(a.aciertos)} de ${a.total})`),
+    '', `Fecha: ${new Date().toLocaleString('es-ES')}`
+  ].join('\n');
+  return { version:1, unidad:CONFIG.UNIDAD, sesion:'S'+sess.n, bloque:sess.block, titulo:sess.title,
+    alumno:state.id.name, grupo:state.id.group, nota, nota_texto:`${fmt(nota)} / 10`, respondidas:resp, total:unidades,
+    actividades:acts, fecha:new Date().toISOString(), practica:!!practice,
+    asunto:`[${state.id.group}] ${state.id.name} · S${sess.n} ${sess.block} · ${fmt(nota)}/10`, resumen };
+}
+async function sendPayload(p){
+  if(!CONFIG.WEBHOOK_URL) return {ok:false, reason:'noconfig'};
+  try{
+    await fetch(CONFIG.WEBHOOK_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body:JSON.stringify(p)});
+    return {ok:true};
+  }catch(e){ return {ok:false, reason:'network'}; }
+}
+function mailtoFor(p){
+  return `mailto:${CONFIG.TEACHER_EMAIL}?subject=${encodeURIComponent(p.asunto)}&body=${encodeURIComponent(p.resumen)}`;
+}
+
+async function submitSession(sess){
+  const panel = $(`#panel-${sess.id}`);
+  if(!(await requireIdentity())) return;
+  const practice = !!state.practice[sess.id];
+  const {t,r} = countAnswered(sess, panel);
+  if(r < t){
+    const ok = await askConfirm('Faltan respuestas', `Has respondido ${r} de ${t}. Las que falten contarán como incorrectas y no podrás cambiar tus respuestas después. ¿Enviar igualmente?`, 'Enviar igualmente');
+    if(!ok) return;
+  } else {
+    const ok = await askConfirm('¿Enviar la sesión?', practice ? 'Estás en modo práctica: se corregirá pero no se enviará nada a tu profesor.' : 'Se corregirá y se enviará tu resultado a tu profesor. No podrás cambiar las respuestas enviadas.', 'Enviar');
+    if(!ok) return;
+  }
+  const acts = sess.activities.filter(a=>a.kind==='auto').map(a=>gradeActivity(a,panel));
+  lockPanel(panel,true);
+  $(`#send-${sess.id}`).disabled = true;
+  const p = buildPayload(sess, acts, null, practice);
+  const out = $(`#result-${sess.id}`);
+  out.innerHTML = `<div class="result" role="status"><div class="big">${fmt(p.nota)} <small>/ 10</small></div>
+    <p style="margin:.4em 0">${practice?'Modo práctica: este intento no se envía.':'Resultado de la sesión'}</p>
+    <ul>${acts.map(a=>`<li><b>${esc(a.codigo)}</b> · ${esc(a.titulo)}: ${fmt(a.nota)} / 10</li>`).join('')}</ul>
+    <div id="st-${sess.id}"></div>
+    <div class="dlg-actions" style="justify-content:flex-start">
+      <button class="btn sec" id="copy-${sess.id}">Copiar resumen</button>
+      <button class="btn ghost" id="again-${sess.id}">Practicar de nuevo (no se envía)</button>
+    </div></div>`;
+  $(`#copy-${sess.id}`).onclick = async e=>{ try{ await navigator.clipboard.writeText(p.resumen); e.target.textContent='Copiado ✓'; }catch(_){ e.target.textContent='No se pudo copiar'; } };
+  $(`#again-${sess.id}`).onclick = ()=>{ state.practice[sess.id]=true; resetActivities(sess,panel); lockPanel(panel,false); out.innerHTML=''; $(`#send-${sess.id}`).disabled=false; updateProgress(sess,panel); showNotice(sess); panel.scrollIntoView({behavior:'smooth'}); };
+  out.scrollIntoView({behavior:'smooth', block:'center'});
+  const st = $(`#st-${sess.id}`);
+  if(practice){ st.innerHTML = `<div class="status warn">Modo práctica: no se ha enviado nada.</div>`; return; }
+  const doSend = async ()=>{
+    st.innerHTML = `<div class="status warn">Enviando…</div>`;
+    const res = await sendPayload(p);
+    if(res.ok){
+      state.done[sess.id] = {score:p.nota, ts:p.fecha, sent:true}; store.set('ud1:done', state.done); markTabs();
+      st.innerHTML = `<div class="status ok">✓ Resultado enviado a tu profesor. Guarda una captura de esta pantalla como justificante.</div>`;
+    } else if(res.reason==='noconfig'){
+      state.done[sess.id] = {score:p.nota, ts:p.fecha, sent:false}; store.set('ud1:done', state.done); markTabs();
+      st.innerHTML = `<div class="status warn">El envío automático aún no está activado. Envía tu resultado por correo con este botón:</div>
+        <p style="margin-top:8px"><a class="btn" href="${mailtoFor(p)}">Enviar por correo</a></p>`;
+    } else {
+      st.innerHTML = `<div class="status bad">No se ha podido enviar (¿sin conexión?).</div>
+        <p style="margin-top:8px"><button class="btn" id="retry-${sess.id}">Reintentar</button> <a class="btn sec" href="${mailtoFor(p)}">Enviar por correo</a></p>`;
+      $(`#retry-${sess.id}`).onclick = doSend;
+    }
+  };
+  doSend();
+}
+
+function showNotice(sess){
+  const n = $(`#notice-${sess.id}`); if(!n) return;
+  const d = state.done[sess.id];
+  if(state.practice[sess.id] && d){ n.innerHTML = `<div class="callout info"><b class="t">Modo práctica</b>Ya enviaste esta sesión${d.score!=null?` (nota ${fmt(d.score)} / 10)`:''}. Puedes repetir las actividades, pero no se enviarán de nuevo.</div>`; }
+  else n.innerHTML = '';
+}
+
+/* ===== tabs ===== */
+const TABS = [{id:'inicio',label:'Inicio',sub:'UD1'}].concat(SESSIONS.map(s=>({id:s.id,label:`Sesión ${s.n}`,sub:s.block}))).concat([{id:'recursos',label:'Recursos',sub:'Enlaces y vídeos'}]);
+function markTabs(){
+  $$('.tab').forEach(t=>{
+    const id = t.dataset.id, d = state.done[id];
+    const mark = $('.mk', t); if(mark) mark.innerHTML = d ? ' <span class="done" title="Enviada">✓</span>' : '';
+  });
+}
+function selectTab(id, focus){
+  TABS.forEach(t=>{
+    const on = t.id===id, btn = $(`#tab-${t.id}`), pn = $(`#panel-${t.id}`);
+    btn.setAttribute('aria-selected', on); btn.tabIndex = on?0:-1; pn.hidden = !on;
+  });
+  if(history.replaceState) history.replaceState(null,'','#'+id);
+  const b = $(`#tab-${id}`); if(focus) b.focus(); b.scrollIntoView({inline:'center',block:'nearest'});
+  window.scrollTo({top:0});
+}
+
+/* ===== páginas ===== */
+function renderInicio(){
+  const rows = SESSIONS.map(s=>{
+    const au = s.activities.filter(a=>a.kind==='auto').length, ot = s.activities.length-au;
+    return `<tr><td><a href="#${s.id}" data-go="${s.id}">Sesión ${s.n}</a></td><td>${s.block}</td><td>${esc(s.title)}</td><td>${esc(s.ce)}</td><td>${au}</td><td>${ot}</td></tr>`;
+  }).join('');
+  return `<div class="card"><h2>Unidad 1 · Emprendimiento, formas jurídicas y normativa</h2>
+   <p>Seis sesiones para saber quién es un emprendedor, qué tipos de autónomo hay, qué forma jurídica elegir y dónde buscar ayudas y financiación en Menorca y las Illes Balears. Todos los ejemplos son del sector náutico.</p>
+   <div class="meta"><span class="pill brand">RA1</span><span class="pill">Criterios 1a a 1g</span><span class="pill">6 sesiones · 55 min</span></div></div>
+   <div class="grid2">
+    <div class="card"><h3>Cómo funciona</h3><ol class="goals">
+      <li>Elige la pestaña de tu sesión y lee <b>Lo esencial</b>.</li>
+      <li>Haz las actividades. Te pediremos tu <b>nombre y el código de tu grupo</b> al empezar.</li>
+      <li>Pulsa <b>Enviar actividades</b> al final de la sesión: se corrigen al momento y tu profesor recibe el resultado.</li>
+      <li>Las actividades marcadas <span class="badge cls">Classroom</span> se explican aquí, pero se entregan en Classroom.</li></ol></div>
+    <div class="card"><h3>Conviene saber</h3><ul class="goals">
+      <li>Solo cuenta el primer envío de cada sesión. Después puedes <b>practicar</b> sin que se envíe.</li>
+      <li>Las cifras y plazos son de octubre de 2026. En ayudas y normativa, comprueba siempre la fuente oficial.</li>
+      <li>Si el envío falla, podrás mandar el resultado por correo.</li></ul></div>
+   </div>
+   <div class="card"><h3>Mapa de la unidad</h3><div class="table-wrap"><table><tr><th>Sesión</th><th>Bloque</th><th>Tema</th><th>Criterio</th><th>Autocorregibles</th><th>Aula / Classroom</th></tr>${rows}</table></div></div>`;
+}
+function renderRecursos(){
+  return `<div class="card"><h2>Enlaces de interés</h2><p class="hint">Fuentes oficiales para consultar la normativa y las convocatorias vigentes.</p>
+   <ul class="links">${LINKS.map(l=>`<li><a class="lk" href="${l.u}" target="_blank" rel="noopener noreferrer"><span class="lt">${esc(l.t)}</span><span class="ld">${esc(l.d)}</span></a></li>`).join('')}</ul></div>
+   <div class="card"><h2>Vídeos recomendados</h2><p class="hint">Cada tarjeta abre una búsqueda en YouTube con la consulta indicada. Elige un vídeo de menos de 10 minutos de un canal fiable y comprueba que las cifras sean actuales.</p>
+   <div class="vgrid">${VIDEOS.map(v=>`<div class="vcard">${v.id?`<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${esc(v.id)}" title="${esc(v.t)}" allowfullscreen></iframe>`:`<div class="thumb" aria-hidden="true">▶</div>`}
+     <div class="vb"><b>${esc(v.t)}</b><small>${esc(v.s)}</small><br><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(v.q)}" target="_blank" rel="noopener noreferrer">Buscar: ${esc(v.q)}</a></div></div>`).join('')}</div></div>`;
+}
+
+/* ===== arranque ===== */
+function init(){
+  const tabs = $('#tabs'), main = $('#app');
+  tabs.innerHTML = TABS.map(t=>`<button class="tab" role="tab" id="tab-${t.id}" data-id="${t.id}" aria-controls="panel-${t.id}" aria-selected="false" tabindex="-1">${t.label}<small>${t.sub}<span class="mk"></span></small></button>`).join('');
+  main.innerHTML = TABS.map(t=>`<section class="panel" role="tabpanel" id="panel-${t.id}" aria-labelledby="tab-${t.id}" hidden></section>`).join('');
+  $('#panel-inicio').innerHTML = renderInicio();
+  SESSIONS.forEach(s=>{
+    const p = $(`#panel-${s.id}`); p.innerHTML = renderSession(s);
+    if(state.done[s.id]) state.practice[s.id] = true;
+    showNotice(s);
+    p.addEventListener('change', ()=>updateProgress(s,p));
+    p.addEventListener('input', ()=>updateProgress(s,p));
+    updateProgress(s,p);
+    const b = $(`#send-${s.id}`); if(b) b.onclick = ()=>submitSession(s);
+  });
+  $('#panel-recursos').innerHTML = renderRecursos();
+  tabs.addEventListener('click', e=>{ const b=e.target.closest('.tab'); if(b) selectTab(b.dataset.id); });
+  tabs.addEventListener('keydown', e=>{
+    const i = TABS.findIndex(t=>$(`#tab-${t.id}`).getAttribute('aria-selected')==='true');
+    let n = null;
+    if(e.key==='ArrowRight') n=(i+1)%TABS.length; else if(e.key==='ArrowLeft') n=(i-1+TABS.length)%TABS.length;
+    else if(e.key==='Home') n=0; else if(e.key==='End') n=TABS.length-1;
+    if(n!==null){ e.preventDefault(); selectTab(TABS[n].id,true); }
+  });
+  document.addEventListener('click', e=>{ const g=e.target.closest('[data-go]'); if(g){ e.preventDefault(); selectTab(g.dataset.go); } });
+  // pedir identificación al empezar las actividades
+  main.addEventListener('focusin', async e=>{
+    if(state.id || $('#idDlg').open) return;
+    if(e.target.closest('.act[data-act] .act-body')){ e.target.blur(); await openIdentity(); }
+  });
+  $('#who').onclick = openIdentity;
+  refreshWho(); markTabs();
+  const h = (location.hash||'').slice(1);
+  selectTab(TABS.some(t=>t.id===h) ? h : 'inicio');
+}
+document.addEventListener('DOMContentLoaded', init);
+
+</script>
+</body>
+</html>
